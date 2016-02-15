@@ -543,30 +543,42 @@
         c3_o    mem;                        //  -M, memory madness
       } u3_opts;
 
+    /* u3_stat: timing statistics.
+    */
+      typedef struct _u3_stat {
+        struct timeval out_tv;              //  last out
+        struct timeval sic_tv;              //  cumulative since
+        struct timeval idl_tv;              //  cumulative idle timer
+        struct timeval cpu_tv;              //  cumulative working timer
+        struct timeval sav_tv;              //  cumulative saving timer
+      } u3_stat;
+
     /* u3_host: entire host.
     */
       typedef struct _u3_host {
-        c3_w       kno_w;                   //  current executing stage
-        c3_c*      dir_c;                   //  pier path
-        c3_d       now_d;                   //  event tick
-        uv_loop_t* lup_u;                   //  libuv event loop
-        u3_http*   htp_u;                   //  http servers
-        u3_cttp    ctp_u;                   //  http clients
-        u3_utel    tel_u;                   //  telnet listener
-        u3_utty*   uty_u;                   //  linked terminal list
-        u3_ames    sam_u;                   //  packet interface
-        u3_save    sav_u;                   //  autosave
-        u3_opts    ops_u;                   //  commandline options
-        u3_unix    unx_u;                   //  sync and clay
-        u3_temp    teh_u;                   //  temp timer
-        c3_o       liv;                     //  if u3_no, shut down
-        c3_i       xit_i;                   //  exit code for shutdown
-        void*      ssl_u;                   //  struct SSL_CTX*
+        c3_w           kno_w;               //  current executing stage
+        c3_c*          dir_c;               //  pier path
+        c3_d           now_d;               //  event tick
+        uv_loop_t*     lup_u;               //  libuv event loop
+        u3_http*       htp_u;               //  http servers
+        u3_cttp        ctp_u;               //  http clients
+        u3_utel        tel_u;               //  telnet listener
+        u3_utty*       uty_u;               //  linked terminal list
+        u3_stat        gat_u;               //  event timing stats
+        u3_ames        sam_u;               //  packet interface
+        u3_save        sav_u;               //  autosave
+        u3_opts        ops_u;               //  commandline options
+        u3_unix        unx_u;               //  sync and clay
+        u3_temp        teh_u;               //  temp timer
+        c3_o           liv;                 //  if u3_no, shut down
+        c3_i           xit_i;               //  exit code for shutdown
+        void*          ssl_u;               //  struct SSL_CTX*
       } u3_host;                            //  host == computer == process
 
 #     define u3L  u3_Host.lup_u             //  global event loop
 #     define u3Z  (&(u3_Raft))
 #     define u3S  u3_Host.ssl_u
+#     define u3G  u3_Host.gat_u             //  event timing
 
   /** Global variables.
   **/
@@ -579,7 +591,7 @@
   **/
     /*  Urbit time: 128 bits, leap-free.
     **
-    **  High 64 bits: 0x8000.000c.cea3.5380 + Unix time at leap 25 (Jul 2012)
+    **  High 64 bits: 0x8000.000c.cea3.5380 + Unix time at leap 26 (Jun 2015)
     **  Low 64 bits: 1/2^64 of a second.
     **
     **  Seconds per Gregorian 400-block: 12.622.780.800
@@ -590,9 +602,9 @@
     **  Seconds before Unix epoch: 9.223.372.091.860.848.000
     **  The same, in C hex notation: 0x8000000cce9e0d80ULL
     **
-    **  New leap seconds after July 2012 (leap second 25) are ignored.  The
+    **  New leap seconds after June 2012 (leap second 26) are ignored.  The
     **  platform OS will not ignore them, of course, so they must be detected
-    **  and counteracted.  Perhaps this phenomenon will soon find an endpoint.
+    **  and counteracted.  Could everyone stop with this, pls?
     */
       /* u3_time_sec_in(): urbit seconds from unix time.
       **

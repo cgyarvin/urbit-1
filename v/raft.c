@@ -1557,6 +1557,34 @@ _raft_drop(u3_noun vir)
   return kil;
 } 
 
+/* _raft_stat(): dump and reset event timing statistics.
+*/
+#ifdef GHETTO
+static void
+_raft_stat(void)
+{
+  struct timeval now_tv, dif_tv;
+
+  gettimeofday(&now_tv, 0);
+  timersub(&now_tv, &u3G.sic_tv, &dif_tv);
+  {
+    c3_w dif_w = (dif_tv.tv_sec * 1000) + (dif_tv.tv_usec / 1000);
+    c3_w idl_w = (u3G.idl_tv.tv_sec * 1000) + (u3G.idl_tv.tv_usec / 1000);
+    c3_w cpu_w = (u3G.cpu_tv.tv_sec * 1000) + (u3G.cpu_tv.tv_usec / 1000);
+    c3_w sav_w = (u3G.sav_tv.tv_sec * 1000) + (u3G.sav_tv.tv_usec / 1000);
+    c3_ws odd_ws = (dif_w - (idl_w + cpu_w + sav_w));
+  
+    uL(fprintf(uH, "ms:[wal %d, idl %d, cpu %d, sav %d, odd %d]\n",
+                   dif_w, idl_w, cpu_w, sav_w, odd_ws));
+  }
+
+  u3G.idl_tv.tv_sec = u3G.idl_tv.tv_usec = 0;
+  u3G.cpu_tv.tv_sec = u3G.cpu_tv.tv_usec = 0;
+  u3G.sav_tv.tv_sec = u3G.sav_tv.tv_usec = 0;
+  gettimeofday(&u3G.sic_tv, 0);
+}
+#endif
+
 /* _raft_punk(): insert and apply an input ovum (unprotected).
 */
 static void
@@ -1586,11 +1614,6 @@ _raft_punk(u3_noun ovo)
 #ifdef GHETTO
   struct timeval b4, f2, d0;
   gettimeofday(&b4, 0);
-#if 0
-  if( c3__belt != u3h(u3t(ovo)) ){
-    uL(fprintf(uH, ":%s\n", txt_c));
-  }
-#endif
 #endif
 
   gon = u3m_soft(sec_w, u3v_poke, u3k(ovo));
@@ -1599,6 +1622,9 @@ _raft_punk(u3_noun ovo)
   c3_w ms_w;
   c3_w clr_w;
 
+  if ( !strcmp("hear", txt_c) ) {
+    _raft_stat();
+  }
   gettimeofday(&f2, 0);
   timersub(&f2, &b4, &d0);
   ms_w = (d0.tv_sec * 1000) + (d0.tv_usec / 1000);
@@ -1624,7 +1650,6 @@ _raft_punk(u3_noun ovo)
 
     u3z(gon);
     nug = u3v_nick(vir, cor);
-
 
     if ( u3_blip != u3h(nug) ) {
       u3_noun why = u3k(u3h(nug));
@@ -1969,6 +1994,19 @@ int FOO;
 void
 u3_raft_work(void)
 {
+#ifdef GHETTO
+  struct timeval now_tv, aft_tv, dif_tv;
+
+  if ( (0 == u3G.sic_tv.tv_sec) && (0 == u3G.sic_tv.tv_usec) ) {
+    gettimeofday(&u3G.sic_tv, 0);
+  } 
+  else {
+    gettimeofday(&now_tv, 0);
+    timersub(&now_tv, &u3G.out_tv, &dif_tv);
+    timeradd(&dif_tv, &u3G.idl_tv, &u3G.idl_tv);
+  }
+#endif
+
   if ( u3Z->typ_e != u3_raty_lead ) {
     c3_assert(u3A->ova.egg_p == 0);
     if ( u3_nul != u3A->roe ) {
@@ -2014,6 +2052,10 @@ u3_raft_work(void)
       ova = u3kb_flop(u3A->roe);
       u3A->roe = u3_nul;
 
+#ifdef GHETTO
+      gettimeofday(&now_tv, 0);
+#endif
+
       while ( u3_nul != ova ) {
         _raft_punk(u3k(u3t(u3h(ova))));
         c3_assert(u3_nul == u3h(u3h(ova)));
@@ -2021,10 +2063,19 @@ u3_raft_work(void)
         nex = u3k(u3t(ova));
         u3z(ova); ova = nex;
       }
+#ifdef GHETTO
+      gettimeofday(&aft_tv, 0);
+      timersub(&aft_tv, &now_tv, &dif_tv);
+      timeradd(&dif_tv, &u3G.cpu_tv, &u3G.cpu_tv);
+#endif
     }
 
     //  Cartify, jam, and encrypt this batch of events. Take a number, Raft will
     //  be with you shortly.
+#ifdef GHETTO
+    gettimeofday(&now_tv, 0);
+#endif
+
     {
       c3_d    bid_d;
       c3_w    len_w;
@@ -2079,5 +2130,12 @@ u3_raft_work(void)
         }
       }
     }
+#ifdef GHETTO
+    gettimeofday(&aft_tv, 0);
+    timersub(&aft_tv, &now_tv, &dif_tv);
+    timeradd(&dif_tv, &u3G.sav_tv, &u3G.sav_tv);
+
+    gettimeofday(&u3G.out_tv, 0);
+#endif
   }
 }
