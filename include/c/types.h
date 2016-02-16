@@ -22,9 +22,11 @@
       typedef uint32_t c3_l;  // little; 31-bit unsigned integer
       typedef uint32_t c3_m;  // mote; also c3_l; LSB first a-z 4-char string.
 
-    /* Deprecated integers.
+    /* Gnarly integers.
     */
       typedef char      c3_c;      // does not match int8_t or uint8_t
       typedef int       c3_i;      // int - really bad
       typedef uintptr_t c3_p;      // pointer-length uint - really really bad
       typedef intptr_t c3_ps;      // pointer-length int - really really bad
+      typedef size_t    c3_z;      // classic unix horror
+      typedef off_t     c3_f;      // classic unix horror

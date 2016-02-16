@@ -48,6 +48,8 @@
 #     include <sys/time.h>
 #     include <sys/resource.h>
 #     include <sys/mman.h>
+#     define FUSE_USE_VERSION 26 
+#     include <fuse/fuse_lowlevel.h>
 
 #   elif defined(U3_OS_bsd)
 #     include <inttypes.h>

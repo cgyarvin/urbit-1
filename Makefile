@@ -65,7 +65,9 @@ endif
 ifeq ($(OS),osx)
   COSFLAGS=-fno-diagnostics-fixit-info
   CLDOSFLAGS=-bind_at_load
-  OSLIBS=-framework CoreServices -framework CoreFoundation
+  OSLIBS=-framework CoreServices -framework CoreFoundation -losxfuse
+  OSINCS=-I/usr/local/include/osxfuse
+  DEFINES=-D_FILE_OFFSET_BITS=64 -D_DARWIN_USE_64_BIT_INODE
 endif
 ifeq ($(OS),linux)
   OSLIBS=-lpthread -lrt -lcurses -lz
@@ -110,6 +112,7 @@ CFLAGS= $(COSFLAGS) $(DEBUGFLAGS) -ffast-math \
 	-I/usr/local/include \
 	$(OPTLOCALINC) \
 	$(OPENSSLINC) \
+	$(OSINCS) \
 	-I$(INCLUDE) \
 	-Ioutside/$(LIBUV_VER)/include \
 	-Ioutside/anachronism/include \

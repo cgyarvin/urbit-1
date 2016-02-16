@@ -532,7 +532,6 @@
         c3_c*   raf_c;                      //  -r, raft flotilla
         c3_c*   who_c;                      //  -T, begin with ticket
         c3_c*   tic_c;                      //  -T, ticket value
-        c3_c*   pil_c;                      //  -B, bootstrap from
         c3_w    kno_w;                      //  -k, kernel version
         c3_w    fuz_w;                      //  -f, fuzz testing
         c3_s    por_s;                      //  -p, ames port
@@ -555,6 +554,50 @@
         c3_o    rep;                        //  -R, report build info
       } u3_opts;
 
+    /* u3_fval: FUSE value.
+    */
+      typedef struct _u3_fval {
+        struct timeval    lax_tv;           //  time last loaded
+        c3_z              siz_z;            //  number of bytes
+        c3_c*             buf_c;            //
+      } u3_fval;
+
+    /* u3_fnod: lightweight FUSE inode
+    */
+      typedef struct _u3_fnod {
+        fuse_ino_t        ino_i,            //  inode number
+        u3_fval*          val_u;            //  value if loaded
+        c3_c*             nam_c;            //  name within parent
+        c3_c*             ext_c;            //  extension if any
+        c3_c*             pax_c;            //  full path, lazily made
+        c3_w              ref_w;            //  lookup reference count
+        struct _u3_fnod*  par_u;            //  parent pointer
+        struct _u3_fnod*  kid_u;            //  child list
+        struct _u3_fnod*  nxt_u;            //  next in parent's kids
+      } u3_fnod;
+
+    /* u3_fino: inode allocator and table
+    */
+      typedef struct _u3_fino {
+        fuse_ino_t  ino_i;                  //  next inode to assign
+        c3_w        len_w;    
+        u3_fnod*    nod_u[0];
+      };
+
+    /* u3_fuse: FUSE (userspace filesystem) state.
+    */
+      typedef struct _u3_fuse {
+        union {
+          uv_poll_t          wax_u;         //  polling on FUSE channel
+          uv_handle_t        had_u;
+        };
+        c3_c*                mnt_c;         //  mountpoint
+        struct fuse_chan*    cha_u;         //  FUSE channel
+        struct fuse_session* sez_u;         //  FUSE session
+        u3_fnod              rot_u;         //  FUSE inode tree
+        u3_fino              ion_u;         //  FUSE inode table
+      } u3_fuse;
+
     /* u3_host: entire host.
     */
       typedef struct _u3_host {
@@ -570,6 +613,7 @@
         u3_save    sav_u;                   //  autosave
         u3_opts    ops_u;                   //  commandline options
         u3_unix    unx_u;                   //  sync and clay
+        u3_fuse    fus_u;
         u3_behn    teh_u;                   //  behn timer
         c3_o       liv;                     //  if u3_no, shut down
         c3_i       xit_i;                   //  exit code for shutdown
@@ -874,6 +918,17 @@
 #       define uH    u3_term_io_hija()
 #       define uL(x) u3_term_io_loja(x)
 
+    /**  FUSE.
+    **/
+      /* u3_fuse_io_init(): initialize FUSE.
+      */
+        void
+        u3_fuse_io_init(void);
+
+      /* u3_fuse_io_exit()
+      */
+        void 
+        u3_fuse_io_exit(void);
 
     /**  Ames, packet networking.
     **/
