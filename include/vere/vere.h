@@ -557,18 +557,29 @@
     /* u3_fval: FUSE value.
     */
       typedef struct _u3_fval {
-        struct timeval    lax_tv;           //  time last loaded
         c3_z              siz_z;            //  number of bytes
-        c3_c*             buf_c;            //
+        c3_c*             buf_c;            //  content buffer
       } u3_fval;
+
+    /* u3_fent: FUSE directory entry.
+    */
+      typedef struct _u3_fent {
+        c3_c*             nam_c;            //  entry name
+        fuse_ino_t        ino_i;            //  inode number
+        struct _u3_fent*  nxt_u;            //  next entry
+      } u3_fent;
 
     /* u3_fnod: lightweight FUSE inode
     */
       typedef struct _u3_fnod {
-        fuse_ino_t        ino_i,            //  inode number
-        u3_fval*          val_u;            //  value if loaded
+        fuse_ino_t        ino_i;            //  inode number
+        struct timeval    lax_tv;           //  time last loaded
+        u3_fval*          val_u;            //  file value if loaded
+        u3_fent*          den_u;            //  directory value if loaded
         c3_c*             nam_c;            //  name within parent
-        c3_c*             ext_c;            //  extension if any
+        c3_c*             ext_c;            //  extension if any;
+                                            //  all files have ext_c
+                                            //  all directories have no ext_c
         c3_c*             pax_c;            //  full path, lazily made
         c3_w              ref_w;            //  lookup reference count
         struct _u3_fnod*  par_u;            //  parent pointer
@@ -580,8 +591,8 @@
     */
       typedef struct _u3_fino {
         fuse_ino_t  ino_i;                  //  next inode to assign
-        c3_w        len_w;    
-        u3_fnod*    nod_u[0];
+        c3_w        len_w;                  //  current table length
+        u3_fnod*    nod_u[0];               //  table
       };
 
     /* u3_fuse: FUSE (userspace filesystem) state.

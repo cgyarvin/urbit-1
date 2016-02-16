@@ -29,7 +29,7 @@ _inode_init(void)
 {
   u3_fuse* fus_u = &u3_Host.fus_u;
   {
-    fus_u->rot_u.ino_i = 2;       // unix traditional
+    fus_u->rot_u.ino_i = FUSE_ROOT_ID;
     fus_u->rot_u.val_u = 0;
     fus_u->rot_u.nam_c = strdup("/");
     fus_u->rot_u.ext_c = 0;
@@ -40,10 +40,10 @@ _inode_init(void)
     fus_u->rot_u.nxt_u = 0;
   }
   {
-    fus_u->ion_u.ino_i = 3;
+    fus_u->ion_u.ino_i = FUSE_ROOT_ID + 1;
     fus_u->ion_u.len_w = 64;
     fus_u->ion_u.nod_u = calloc(64, sizeof(struct fnod *));
-    fus_u->ion_u.nod_u[2] = &fus_u->rot_u;
+    fus_u->ion_u.nod_u[FUSE_ROOT_ID] = &fus_u->rot_u;
   }
 }
 
@@ -75,6 +75,71 @@ _inode_new(void)
                                   sizeof(struct fnod *)));
   }
   return nod_u;
+}
+
+/* _inode_stat(): fill stat buffer from inode; return c3y if available
+*/
+static c3_o
+_inode_stat(struct u3_fnod* nod_u, struct stat* buf_u)
+{
+  memset(buf_u, 0, sizeof(struct stat));
+
+  if ( nod_u->ext_c ) {
+    if ( 0 == nod_u->val_u ) {
+      return c3n;
+    }
+    else {
+      buf_u->st_mode = S_IFREG | 0444;
+      buf_u->st_nlink = 1;
+      buf_u->st_size = val_u->siz_z;
+
+      return c3y;
+    }
+  }
+  else {
+    buf_u->st_mode = S_IFDIR | 0555;
+    buf_u->st_nlink = 2;
+
+    return c3y;
+  }
+}
+
+/* _inode_path(): map inode path to noun.
+*/
+static u3_noun
+_inode_path(struct u3_fnod* nod_u, u3_noun end)
+{
+  if ( nod_u->par_u == 0 ) {
+    return end; 
+  }
+  else {
+    if ( nod_u->ext_c ) {
+      end = u3nc(u3i_string(nod_u->ext_c), end);
+    }
+    end = u3nc(u3i_string(nod_u->nam_c), end);
+ 
+    return _inode_path(nod_u->par_u, end);
+  }
+}
+
+/* _arch_
+/* _inode_load(): load inode value with peek.
+*/
+static c3_o
+_inod_load(struct u3_fnod* nod_u)
+{
+  if ( u3_nul == u3A->own ) {
+    return c3n;
+  } 
+  else {
+    u3_noun our = u3dc("scot", 'p', u3k(u3h(u3A->own)));
+    u3_noun hap = _inode_path(nod_u);
+
+    if ( nod_u->ext_c ) {
+      hap = u3nc(c3__cx, u3nq(our, c3__home, u3k(u3A->wen), hap));A
+      val = 
+    }
+  }
 }
 
 	/**
@@ -114,12 +179,36 @@ _fuse_ll_lookup(fuse_req_t  req_u,
 {
   u3_fuse* fus_u = &u3_Host.fus_u;
   {
-    u3_fnod* pod_u = _inode_get(pno_i);
+    c3_c*    ext_c = strrchr(nam_c, '.');
+    c3_w     len_w = (ext_c ? (ext_c - nam_c) : strlen(nam_c));
+    u3_fnod* par_u = _inode_get(pno_i);
     u3_fnod* nod_u;
 
-    //  Linear search.
+    //  Find, then make.
     {
-      for ( nod_u = pod_u->kids;  
+      for ( nod_u = par_u->kid_u; nod_u; nod_u = nod_u->nex_u ) {
+        if ( !strncmp(nam_c, nod_u->nam_c, len_w) &&
+             ((!ext_c && !nod_u->ext_c) ||
+              (ext_c && nod_u->ext_c && !strcmp(ext_c, nod_u->ext_c))) )
+        {
+          // reply nod_u->ino_i
+        }
+      }
+
+      if ( !nod_u ) {
+      }
+    }
+
+    nod_u = _inode_new();
+    {
+      nod_u->nam_c = malloc(len_w + 1);
+      strncpy(nod_u->nam_c, nam_c, len_w);
+      nod_u->nam_c[len_w] = 0;
+    }
+    nod_u->ext_c = strdup(ext_c);
+    nod_u->par_u = par_u;
+    nod_u->nex_u = par_u->kid_u;
+    par_u->kid_u = nod_u;
   }
 }
 
