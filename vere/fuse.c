@@ -30,10 +30,11 @@ _inode_init(void)
   u3_fuse* fus_u = &u3_Host.fus_u;
   {
     fus_u->rot_u.ino_i = FUSE_ROOT_ID;
+    fus_u->rot_u
     fus_u->rot_u.val_u = 0;
     fus_u->rot_u.nam_c = strdup("/");
-    fus_u->rot_u.ext_c = 0;
     fus_u->rot_u.pax_c = 0;
+    fus_u->rot_u.val_u = 0;
     fus_u->rot_u.ref_w = 0x1fffffff;
     fus_u->rot_u.par_u = 0;
     fus_u->rot_u.kid_u = 0;

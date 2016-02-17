@@ -554,6 +554,14 @@
         c3_o    rep;                        //  -R, report build info
       } u3_opts;
 
+    /* u3_ftyp: FUSE inode type.
+    */
+      typedef enum _u3_ftyp {
+        u3_fuse_type_unknown = 0,
+        u3_fuse_type_file = 1,
+        u3_fuse_type_directory = 2
+      } u3_ftyp;
+
     /* u3_fval: FUSE value.
     */
       typedef struct _u3_fval {
@@ -569,17 +577,22 @@
         struct _u3_fent*  nxt_u;            //  next entry
       } u3_fent;
 
+    /* u3_fdir: FUSE directory.
+    */
+      typedef struct _u3_fdir {
+        c3_c*    num_w;                     //  number of entries
+        u3_fent* fen_u;                     //  directory entries
+      } u3_fdir;
+
     /* u3_fnod: lightweight FUSE inode
     */
       typedef struct _u3_fnod {
         fuse_ino_t        ino_i;            //  inode number
+        u3_ftyp           typ_e;            //  inode type
         struct timeval    lax_tv;           //  time last loaded
         u3_fval*          val_u;            //  file value if loaded
-        u3_fent*          den_u;            //  directory value if loaded
+        u3_fdir*          dir_u;            //  directory value if loaded
         c3_c*             nam_c;            //  name within parent
-        c3_c*             ext_c;            //  extension if any;
-                                            //  all files have ext_c
-                                            //  all directories have no ext_c
         c3_c*             pax_c;            //  full path, lazily made
         c3_w              ref_w;            //  lookup reference count
         struct _u3_fnod*  par_u;            //  parent pointer
