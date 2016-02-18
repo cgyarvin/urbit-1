@@ -347,6 +347,7 @@ V_OFILES=\
        vere/term.o \
        vere/time.o \
        vere/unix.o \
+			 vere/fuse.o \
        vere/save.o \
        vere/walk.o
 

@@ -532,6 +532,7 @@
         c3_c*   raf_c;                      //  -r, raft flotilla
         c3_c*   who_c;                      //  -T, begin with ticket
         c3_c*   tic_c;                      //  -T, ticket value
+        c3_c*   pil_c;                      //  -B, bootstrap from
         c3_w    kno_w;                      //  -k, kernel version
         c3_w    fuz_w;                      //  -f, fuzz testing
         c3_s    por_s;                      //  -p, ames port
@@ -557,24 +558,23 @@
     /* u3_ftyp: FUSE inode type.
     */
       typedef enum _u3_ftyp {
-        u3_fuse_type_unknown = 0,
-        u3_fuse_type_file = 1,
-        u3_fuse_type_directory = 2
+        u3_fuse_type_unknown = 0,           //  not yet loaded
+        u3_fuse_type_file = 1,              //  file (subtrees blocked)
+        u3_fuse_type_directory = 2          //  directory (or empty)
       } u3_ftyp;
 
     /* u3_fval: FUSE value.
     */
       typedef struct _u3_fval {
         c3_z              siz_z;            //  number of bytes
-        c3_c*             buf_c;            //  content buffer
+        c3_y*             buf_y;            //  content buffer
       } u3_fval;
 
     /* u3_fent: FUSE directory entry.
     */
       typedef struct _u3_fent {
-        c3_c*             nam_c;            //  entry name
-        fuse_ino_t        ino_i;            //  inode number
-        struct _u3_fent*  nxt_u;            //  next entry
+        struct _u3_fnod* nod_u;             //  inode
+        struct _u3_fent* nex_u;             //  next entry
       } u3_fent;
 
     /* u3_fdir: FUSE directory.
@@ -597,7 +597,7 @@
         c3_w              ref_w;            //  lookup reference count
         struct _u3_fnod*  par_u;            //  parent pointer
         struct _u3_fnod*  kid_u;            //  child list
-        struct _u3_fnod*  nxt_u;            //  next in parent's kids
+        struct _u3_fnod*  nex_u;            //  next in parent's kids
       } u3_fnod;
 
     /* u3_fino: inode allocator and table
@@ -605,8 +605,8 @@
       typedef struct _u3_fino {
         fuse_ino_t  ino_i;                  //  next inode to assign
         c3_w        len_w;                  //  current table length
-        u3_fnod*    nod_u[0];               //  table
-      };
+        u3_fnod**   nod_u;                  //  table
+      } u3_fino;
 
     /* u3_fuse: FUSE (userspace filesystem) state.
     */
