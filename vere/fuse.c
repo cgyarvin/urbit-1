@@ -329,35 +329,36 @@ _inode_load(u3_fnod* nod_u)
   }
 }
 
-	/**
-	 * Initialize filesystem
-	 *
-	 * Called before any other filesystem method
-	 *
-	 * There's no reply to this function
-	 *
-	 * @param userdata the user data passed to fuse_lowlevel_new()
-	 */
+  /**
+   * Initialize filesystem
+   *
+   * Called before any other filesystem method
+   *
+   * There's no reply to this function
+   *
+   * @param userdata the user data passed to fuse_lowlevel_new()
+   */
 static void
 _fuse_ll_init(void*                  usr_v,
               struct fuse_conn_info* con_u)
 {
+  uL(fprintf(uH, "ll_init\n"));
   {
     _inode_init();
   }
 }
 
-	/**
-	 * Look up a directory entry by name and get its attributes.
-	 *
-	 * Valid replies:
-	 *   fuse_reply_entry
-	 *   fuse_reply_err
-	 *
-	 * @param req request handle
-	 * @param parent inode number of the parent directory
-	 * @param name the name to look up
-	 */
+  /**
+   * Look up a directory entry by name and get its attributes.
+   *
+   * Valid replies:
+   *   fuse_reply_entry
+   *   fuse_reply_err
+   *
+   * @param req request handle
+   * @param parent inode number of the parent directory
+   * @param name the name to look up
+   */
 static void 
 _fuse_ll_lookup(fuse_req_t  req_u, 
                 fuse_ino_t  pno_i, 
@@ -401,17 +402,17 @@ _fuse_ll_lookup(fuse_req_t  req_u,
   }
 }
 
-	/**
-	 * Get file attributes
-	 *
-	 * Valid replies:
-	 *   fuse_reply_attr
-	 *   fuse_reply_err
-	 *
-	 * @param req request handle
-	 * @param ino the inode number
-	 * @param fi for future use, currently always NULL
-	 */
+  /**
+   * Get file attributes
+   *
+   * Valid replies:
+   *   fuse_reply_attr
+   *   fuse_reply_err
+   *
+   * @param req request handle
+   * @param ino the inode number
+   * @param fi for future use, currently always NULL
+   */
 static void
 _fuse_ll_getattr(fuse_req_t             req_u,
                  fuse_ino_t             ino_i,
@@ -437,26 +438,26 @@ _fuse_ll_getattr(fuse_req_t             req_u,
   }
 }
 
-	/**
-	 * Read directory
-	 *
-	 * Send a buffer filled using fuse_add_direntry(), with size not
-	 * exceeding the requested size.  Send an empty buffer on end of
-	 * stream.
-	 *
-	 * fi->fh will contain the value set by the opendir method, or
-	 * will be undefined if the opendir method didn't set any value.
-	 *
-	 * Valid replies:
-	 *   fuse_reply_buf
-	 *   fuse_reply_err
-	 *
-	 * @param req request handle
-	 * @param ino the inode number
-	 * @param size maximum number of bytes to send
-	 * @param off offset to continue reading the directory stream
-	 * @param fi file information
-	 */
+  /**
+   * Read directory
+   *
+   * Send a buffer filled using fuse_add_direntry(), with size not
+   * exceeding the requested size.  Send an empty buffer on end of
+   * stream.
+   *
+   * fi->fh will contain the value set by the opendir method, or
+   * will be undefined if the opendir method didn't set any value.
+   *
+   * Valid replies:
+   *   fuse_reply_buf
+   *   fuse_reply_err
+   *
+   * @param req request handle
+   * @param ino the inode number
+   * @param size maximum number of bytes to send
+   * @param off offset to continue reading the directory stream
+   * @param fi file information
+   */
 static void
 _fuse_ll_readdir(fuse_req_t             req_u,
                  fuse_ino_t             ino_i,
@@ -497,36 +498,37 @@ _fuse_ll_readdir(fuse_req_t             req_u,
   }
 }
 
-	/**
-	 * Open a file
-	 *
-	 * Open flags (with the exception of O_CREAT, O_EXCL, O_NOCTTY and
-	 * O_TRUNC) are available in fi->flags.
-	 *
-	 * Filesystem may store an arbitrary file handle (pointer, index,
-	 * etc) in fi->fh, and use this in other all other file operations
-	 * (read, write, flush, release, fsync).
-	 *
-	 * Filesystem may also implement stateless file I/O and not store
-	 * anything in fi->fh.
-	 *
-	 * There are also some flags (direct_io, keep_cache) which the
-	 * filesystem may set in fi, to change the way the file is opened.
-	 * See fuse_file_info structure in <fuse_common.h> for more details.
-	 *
-	 * Valid replies:
-	 *   fuse_reply_open
-	 *   fuse_reply_err
-	 *
-	 * @param req request handle
-	 * @param ino the inode number
-	 * @param fi file information
-	 */
+  /**
+   * Open a file
+   *
+   * Open flags (with the exception of O_CREAT, O_EXCL, O_NOCTTY and
+   * O_TRUNC) are available in fi->flags.
+   *
+   * Filesystem may store an arbitrary file handle (pointer, index,
+   * etc) in fi->fh, and use this in other all other file operations
+   * (read, write, flush, release, fsync).
+   *
+   * Filesystem may also implement stateless file I/O and not store
+   * anything in fi->fh.
+   *
+   * There are also some flags (direct_io, keep_cache) which the
+   * filesystem may set in fi, to change the way the file is opened.
+   * See fuse_file_info structure in <fuse_common.h> for more details.
+   *
+   * Valid replies:
+   *   fuse_reply_open
+   *   fuse_reply_err
+   *
+   * @param req request handle
+   * @param ino the inode number
+   * @param fi file information
+   */
 static void
 _fuse_ll_open(fuse_req_t             req_u,
               fuse_ino_t             ino_i,
               struct fuse_file_info* ffi_u)
 {
+  uL(fprintf(uH, "ll_open %ld\n", ino_i));
   {
     u3_fnod* nod_u = _inode_get(ino_i);
 
@@ -545,29 +547,29 @@ _fuse_ll_open(fuse_req_t             req_u,
   }
 }
 
-	/**
-	 * Read data
-	 *
-	 * Read should send exactly the number of bytes requested except
-	 * on EOF or error, otherwise the rest of the data will be
-	 * substituted with zeroes.  An exception to this is when the file
-	 * has been opened in 'direct_io' mode, in which case the return
-	 * value of the read system call will reflect the return value of
-	 * this operation.
-	 *
-	 * fi->fh will contain the value set by the open method, or will
-	 * be undefined if the open method didn't set any value.
-	 *
-	 * Valid replies:
-	 *   fuse_reply_buf
-	 *   fuse_reply_err
-	 *
-	 * @param req request handle
-	 * @param ino the inode number
-	 * @param size number of bytes to read
-	 * @param off offset to read from
-	 * @param fi file information
-	 */
+  /**
+   * Read data
+   *
+   * Read should send exactly the number of bytes requested except
+   * on EOF or error, otherwise the rest of the data will be
+   * substituted with zeroes.  An exception to this is when the file
+   * has been opened in 'direct_io' mode, in which case the return
+   * value of the read system call will reflect the return value of
+   * this operation.
+   *
+   * fi->fh will contain the value set by the open method, or will
+   * be undefined if the open method didn't set any value.
+   *
+   * Valid replies:
+   *   fuse_reply_buf
+   *   fuse_reply_err
+   *
+   * @param req request handle
+   * @param ino the inode number
+   * @param size number of bytes to read
+   * @param off offset to read from
+   * @param fi file information
+   */
 static void
 _fuse_ll_read(fuse_req_t             req_u,
               fuse_ino_t             ino_i,
@@ -575,6 +577,7 @@ _fuse_ll_read(fuse_req_t             req_u,
               c3_f                   off_f,
               struct fuse_file_info* ffi_u)
 {
+  uL(fprintf(uH, "ll_read %ld %ld %lld\n", ino_i, max_z, off_f));
   {
     u3_fnod* nod_u = _inode_get(ino_i);
 
@@ -593,10 +596,10 @@ _fuse_ll_read(fuse_req_t             req_u,
 static struct fuse_lowlevel_ops fuse_api = {
   .init      = _fuse_ll_init,
   .lookup    = _fuse_ll_lookup, 
-	.getattr   = _fuse_ll_getattr,
-	.readdir   = _fuse_ll_readdir,
-	.open		   = _fuse_ll_open,
-	.read		   = _fuse_ll_read,
+  .getattr   = _fuse_ll_getattr,
+  .readdir   = _fuse_ll_readdir,
+  .open	     = _fuse_ll_open,
+  .read	     = _fuse_ll_read,
 };
 
 /* _fuse_poll_cb(): 
@@ -610,7 +613,7 @@ _fuse_poll_cb(uv_poll_t* wax_u,
 
   uL(fprintf(uH, "fuse_poll_cb\n"));
   {
-	  c3_z  buf_z = fuse_chan_bufsize(fus_u->cha_u);
+    c3_z  buf_z = fuse_chan_bufsize(fus_u->cha_u);
     c3_y* buf_y = malloc(buf_z + 1);
     c3_i  res_i = fuse_chan_recv(&fus_u->cha_u, (c3_c *)buf_y, buf_z);
 
@@ -627,6 +630,8 @@ _fuse_poll_cb(uv_poll_t* wax_u,
                            (c3_c *)buf_y,
                            buf_z,
                            fus_u->cha_u);
+
+      uv_poll_start(&fus_u->wax_u, UV_READABLE, _fuse_poll_cb);
     }
   }
 }
@@ -638,9 +643,14 @@ u3_fuse_io_init(void)
 {
   u3_fuse* fus_u = &u3_Host.fus_u;
 
+#if 0
   fus_u->mnt_c = malloc(strlen(u3_Host.dir_c) + 16);
   strcpy(fus_u->mnt_c, u3_Host.dir_c);
   strncat(fus_u->mnt_c, "/.urb/fun", 14);
+#else
+  fus_u->mnt_c = strdup("/Users/cyarvin/urbit");
+#endif
+  mkdir(fus_u->mnt_c, 0755);
 
   uL(fprintf(uH, "fuse: mounting: %s\n", fus_u->mnt_c));
 
@@ -655,8 +665,12 @@ u3_fuse_io_init(void)
 
   {
     c3_i fid_i = fuse_chan_fd(fus_u->cha_u);
+    c3_i err_i;
 
-    uv_poll_init(u3L, &fus_u->wax_u, fid_i); 
+    uL(fprintf(uH, "fuse: fd: %d (loop %p)\n", fid_i, u3L));
+    if ( (err_i = uv_poll_init(u3L, &fus_u->wax_u, fid_i)) < 0 ) {
+      uL(fprintf(uH, "fuse: poll_init failed: %s\n", uv_strerror(err_i)));
+    }
     uv_poll_start(&fus_u->wax_u, UV_READABLE, _fuse_poll_cb);
   }
 }
@@ -674,5 +688,7 @@ u3_fuse_io_exit(void)
   fuse_session_remove_chan(fus_u->cha_u);
   fuse_session_destroy(fus_u->sez_u);
   fuse_unmount(fus_u->mnt_c, fus_u->cha_u);
+
+  uL(fprintf(uH, "fuse: unmounted: %s\n", fus_u->mnt_c));
 
 }

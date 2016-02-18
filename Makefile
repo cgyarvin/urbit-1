@@ -86,7 +86,7 @@ endif
 INCLUDE=include
 MDEFINES=-DU3_OS_$(OS) -DU3_OS_ENDIAN_$(ENDIAN) -D U3_LIB=\"$(LIB)\"
 
-DEBUG=no
+DEBUG=yes
 
 ifeq ($(DEBUG),yes)
 DEBUGFLAGS=-g
@@ -95,8 +95,8 @@ DEBUGFLAGS=-O3
 endif
 
 # libuv version
-LIBUV_VER=libuv_0.11
-#LIBUV_VER=libuv-v1.7.5
+#LIBUV_VER=libuv_0.11
+LIBUV_VER=libuv-v1.7.5
 
 ifeq ($(LIBUV_VER),libuv_0.11)
 LIBUV_CONFIGURE_OPTIONS=--disable-dtrace

@@ -314,10 +314,16 @@ _sist_home()
     snprintf(ful_c, 2048, "cp %s/urbit.pill %s/.urb",
                     U3_LIB, u3_Host.dir_c);
     printf("%s\r\n", ful_c);
+
+    // Starting FUSE apparently did this.
+    //
+    signal(SIGCHLD, SIG_DFL);
     if ( 0 != system(ful_c) ) {
+      perror("cp");
       uL(fprintf(uH, "could not %s\n", ful_c));
       u3_lo_bail();
     }
+    signal(SIGCHLD, SIG_IGN);
   }
 
 #if 1

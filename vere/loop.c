@@ -195,6 +195,11 @@ _lo_init()
   cod_l = u3a_lush(c3__behn);
   u3_behn_io_init();
   u3a_lop(cod_l);
+#if 1
+  cod_l = u3a_lush(c3__fuse);
+  u3_fuse_io_init();
+  u3a_lop(cod_l);
+#endif
 }
 
 /* _lo_talk(): bring up listeners across the process.
@@ -255,6 +260,12 @@ u3_lo_exit(void)
   cod_l = u3a_lush(c3__behn);
   u3_behn_io_exit();
   u3a_lop(cod_l);
+
+#if 1
+  cod_l = u3a_lush(c3__fuse);
+  u3_fuse_io_exit();
+  u3a_lop(cod_l);
+#endif
 }
 
 /* _lo_poll(): reset event flags across the process.
