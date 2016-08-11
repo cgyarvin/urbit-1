@@ -504,8 +504,11 @@ static u3j_core _tri_d[] =
 
   static u3j_harm _two_dor_a[] = {{".2", u3wc_dor, c3y}, {}};
   static u3j_harm _two_gor_a[] = {{".2", u3wc_gor, c3y}, {}};
+  static u3j_harm _two_gyr_a[] = {{".2", u3wc_gor, c3n}, {}};
   static u3j_harm _two_hor_a[] = {{".2", u3wc_hor, c3y}, {}};
+  static u3j_harm _two_hyr_a[] = {{".2", u3wc_hyr, c3y}, {}};
   static u3j_harm _two_vor_a[] = {{".2", u3wc_vor, c3y}, {}};
+  static u3j_harm _two_vyr_a[] = {{".2", u3wc_vyr, c3y}, {}};
 
   static u3j_harm _two_pow_a[] = {{".2", u3wc_pow, c3y}, {}};
   static u3j_harm _two_sqt_a[] = {{".2", u3wc_sqt, c3y}, {}};
@@ -601,9 +604,13 @@ static u3j_core _two_d[] =
     { "mug", _two_mug_a },
 
     { "dor", _two_dor_a },
+
     { "gor", _two_gor_a },
+    { "gyr", _two_gyr_a },
     { "hor", _two_hor_a },
+    { "hyr", _two_hyr_a },
     { "vor", _two_vor_a },
+    { "vyr", _two_vyr_a },
 
     { "pow", _two_pow_a },
     { "sqt", _two_sqt_a },
