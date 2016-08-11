@@ -768,7 +768,7 @@ _cj_mine(u3_noun cey, u3_noun cor)
       c3_l    jax_l = _cj_hot_mine(mop, cor);
       u3_noun bal = u3nc(u3k(p_cey), lab);
 
-#if 1
+#if 0
       u3m_p("new jet", bal);
       // fprintf(stderr, "  bat %x, jax %d\r\n", u3r_mug(bat), jax_l);
 #endif
