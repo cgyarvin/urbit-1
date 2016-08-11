@@ -46,7 +46,7 @@
 #ifdef U3_MEMORY_DEBUG
 #     define u3a_minimum   8
 #else
-#     define u3a_minimum   6
+#     define u3a_minimum   7
 #endif
 
     /* u3a_fbox_no: number of free lists per size.
@@ -60,16 +60,19 @@
     */
       typedef struct {
         c3_w mug_w;
+        c3_w mum_w;                     // temporary murmur32
       } u3a_noun;
 
       typedef struct {
         c3_w mug_w;
+        c3_w mum_w;
         c3_w len_w;
         c3_w buf_w[0];
       } u3a_atom;
 
       typedef struct {
         c3_w    mug_w;
+        c3_w    mum_w;
         u3_noun hed; 
         u3_noun tel;
       } u3a_cell;

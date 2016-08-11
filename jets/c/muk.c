@@ -16,9 +16,12 @@
     c3_y *key_y;
     c3_w out_w;
 
-    c3_assert(u3r_met(5, seed) <= 1);
-    c3_assert(u3r_met(0, len)  <= 31);
-    c3_assert(u3r_met(3, key)  <= len);
+    if ( ! ( (u3r_met(5, seed) <= 1) &&
+             (u3r_met(0, len)  <= 31) &&
+             (u3r_met(3, key)  <= len) ) )
+    {
+      return u3m_bail(c3__exit);
+    }
 
     seed_w = u3r_word(0, seed);
     len_w  = u3r_word(0, len);
@@ -50,5 +53,23 @@
       return u3m_bail(c3__exit);
     } else {
       return u3qc_muk(seed, len, key);
+    }
+  }
+
+  u3_noun
+  u3qc_mum(u3_noun val)
+  {
+    return u3r_mum(val);
+  }
+
+  u3_noun
+  u3wc_mum(u3_noun cor)
+  {
+    u3_noun a;
+
+    if ( (u3_none == (a = u3r_at(u3x_sam, cor))) ) {
+      return u3m_bail(c3__exit);
+    } else {
+      return u3qc_mum(a);
     }
   }

@@ -902,6 +902,7 @@ _me_copy_north(u3_noun dog)
         u3_noun     new   = u3a_de_twin(dog, new_w);
         u3a_cell* new_u = (u3a_cell*)(void *)new_w;
 
+        new_u->mum_w = old_u->mum_w;
         new_u->mug_w = old_u->mug_w;
         new_u->hed = _me_copy_north_in(old_u->hed);
         new_u->tel = _me_copy_north_in(old_u->tel);
@@ -917,6 +918,7 @@ _me_copy_north(u3_noun dog)
         u3_noun     new   = u3a_de_twin(dog, new_w);
         u3a_atom* new_u = (u3a_atom*)(void *)new_w;
 
+        new_u->mum_w = old_u->mum_w;
         new_u->mug_w = old_u->mug_w;
         new_u->len_w = old_u->len_w;
         {
@@ -1003,6 +1005,7 @@ _me_copy_south(u3_noun dog)
         }
 #endif
         new_u->mug_w = old_u->mug_w;
+        new_u->mum_w = old_u->mum_w;
         // new_u->mug_w = 0;
         new_u->hed = _me_copy_south_in(old_u->hed);
         new_u->tel = _me_copy_south_in(old_u->tel);
@@ -1020,6 +1023,7 @@ _me_copy_south(u3_noun dog)
 
         // printf("south: atom %p to %p\r\n", old_u, new_u);
 
+        new_u->mum_w = old_u->mum_w;
         new_u->mug_w = old_u->mug_w;
         // new_u->mug_w = 0;
         new_u->len_w = old_u->len_w;
@@ -1636,6 +1640,7 @@ u3a_slab(c3_w len_w)
   c3_w*     nov_w = u3a_walloc(len_w + c3_wiseof(u3a_atom));
   u3a_atom* pug_u = (void *)nov_w;
 
+  pug_u->mum_w = 0;
   pug_u->mug_w = 0;
   pug_u->len_w = len_w;
 

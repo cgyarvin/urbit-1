@@ -39,6 +39,70 @@
         c3_w
         u3r_mug(u3_noun a);
 
+      /* u3r_mum():
+      **
+      **   Compute murmur31 of `val`.
+      */
+        c3_w
+        u3r_mum(u3_noun val);
+
+      /* u3r_mum_string():
+      **
+      **   Compute the mum of `a`, LSB first.
+      */
+        c3_w
+        u3r_mum_string(const c3_c *a_c);
+
+      /* u3r_mum_words():
+      **
+      **   Compute the mum of `buf`, `len`, LSW first.
+      */
+        c3_w
+        u3r_mum_words(const c3_w *buf_w,
+                      c3_w        len_w);
+
+      /* u3r_mum_d():
+      **
+      **   Compute the mum of `num`, LSW first.
+      */
+        c3_w
+        u3r_mum_d(c3_d num_d);
+
+      /* u3r_mum_bytes():
+      **
+      **   Compute the mum of `buf`, `len`, LSB first.
+      */
+        c3_w
+        u3r_mum_bytes(const c3_y *buf_y,
+                      c3_w        len_w);
+
+      /* u3r_mum_cell():
+      **
+      **   Compute the mum of `[a b]`.
+      */
+        c3_w
+        u3r_mum_cell(u3_noun a,
+                     u3_noun b);
+
+      /* u3r_mum_trel():
+      **
+      **   Compute the mum of `[a b c]`.
+      */
+        c3_w
+        u3r_mum_trel(u3_noun a,
+                     u3_noun b,
+                     u3_noun c);
+
+      /* u3r_mum_qual():
+      **
+      **   Compute the mum of `[a b c d]`.
+      */
+        c3_w
+        u3r_mum_qual(u3_noun a,
+                     u3_noun b,
+                     u3_noun c,
+                     u3_noun d);
+
       /* u3r_mug_string():
       **
       **   Compute the mug of `a`, LSB first.

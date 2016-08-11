@@ -32,6 +32,7 @@ u3i_words(c3_w        a_w,
     c3_w*       nov_w = u3a_walloc(a_w + c3_wiseof(u3a_atom));
     u3a_atom* nov_u = (void*)nov_w;
 
+    nov_u->mum_w = 0;
     nov_u->mug_w = 0;
     nov_u->len_w = a_w;
 
@@ -110,6 +111,7 @@ u3i_bytes(c3_w        a_w,
     c3_w*       nov_w = u3a_walloc((len_w + c3_wiseof(u3a_atom)));
     u3a_atom* nov_u = (void*)nov_w;
 
+    nov_u->mum_w = 0;
     nov_u->mug_w = 0;
     nov_u->len_w = len_w;
 
@@ -212,6 +214,7 @@ u3i_cell(u3_noun a, u3_noun b)
     u3a_cell* nov_u = (void *)nov_w;
     u3_noun     pro;
 
+    nov_u->mum_w = 0;
     nov_u->mug_w = 0;
     nov_u->hed = a;
     nov_u->tel = b;
