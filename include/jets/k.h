@@ -159,3 +159,13 @@
   */
     u3_noun 
     u3kfu_repo(u3_noun, u3_noun);
+
+  /* u3kx_fork(): build %fork span.
+  */
+    u3_noun
+    u3kx_fork(u3_noun yed);
+
+  /* u3kxu_repo(): 
+  */
+    u3_noun 
+    u3kxu_repo(u3_noun, u3_noun);

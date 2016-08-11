@@ -328,6 +328,46 @@ J_F_OFILES_UT=\
        jets/f/ut_toss.o \
        jets/f/ut_wrap.o
 
+J_X_OFILES=\
+       jets/x/al.o \
+       jets/x/ap.o \
+       jets/x/cell.o \
+       jets/x/comb.o \
+       jets/x/cons.o \
+       jets/x/core.o \
+       jets/x/face.o \
+       jets/x/fitz.o \
+       jets/x/flan.o \
+       jets/x/flip.o \
+       jets/x/flor.o \
+       jets/x/fork.o \
+       jets/x/hike.o \
+       jets/x/look.o \
+
+J_X_OFILES_UT=\
+       jets/x/ut.o \
+       jets/x/ut_burn.o \
+       jets/x/ut_buss.o \
+       jets/x/ut_conk.o \
+       jets/x/ut_crop.o \
+       jets/x/ut_find.o \
+       jets/x/ut_fire.o \
+       jets/x/ut_fish.o \
+       jets/x/ut_fuse.o \
+       jets/x/ut_gain.o \
+       jets/x/ut_lose.o \
+       jets/x/ut_mint.o \
+       jets/x/ut_mull.o \
+       jets/x/ut_nest.o \
+       jets/x/ut_peek.o \
+       jets/x/ut_perk.o \
+       jets/x/ut_play.o \
+       jets/x/ut_repo.o \
+       jets/x/ut_rest.o \
+       jets/x/ut_tack.o \
+       jets/x/ut_toss.o \
+       jets/x/ut_wrap.o
+
 J_G_OFILES=\
        jets/g/down.o
 
@@ -340,6 +380,8 @@ J_OFILES=\
        $(J_E_OFILES_ED) \
        $(J_F_OFILES) \
        $(J_F_OFILES_UT) \
+       $(J_X_OFILES) \
+       $(J_X_OFILES_UT) \
        $(J_G_OFILES) \
        jets/tree.o
 
