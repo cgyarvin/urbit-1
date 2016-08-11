@@ -5,7 +5,6 @@
 
 /* internal functions
 */
-  static
   u3_noun _i_dif_join(u3_noun d,
                       u3_noun e)
   {
@@ -21,7 +20,7 @@
            || c3n == u3r_trel(e, &n_e, &l_e, &r_e) ) {
         return u3m_bail(c3__exit);
       } else {
-        if ( c3y == u3qc_vor(n_d, n_e) ) {
+        if ( c3y == u3qc_vyr(n_d, n_e) ) {
           return u3nt(u3k(n_d),
                       u3k(l_d),
                       _i_dif_join(u3k(r_d), u3k(e)));
@@ -36,17 +35,17 @@
 
 /* functions
 */
-  u3_noun u3wdi_dif(u3_noun cor)
+  u3_noun u3wdy_dif(u3_noun cor)
   {
     u3_noun a, b;
     if ( c3n == u3r_mean(cor, u3x_sam, &b, u3x_con_sam, &a, 0) ) {
       return u3m_bail(c3__exit);
     } else {
-      return u3qdi_dif(a, b);
+      return u3qdy_dif(a, b);
     }
   }
 
-  u3_noun u3qdi_dif(u3_noun a,
+  u3_noun u3qdy_dif(u3_noun a,
                     u3_noun b)
   {
     if ( u3_nul == b ) {
@@ -59,7 +58,7 @@
         return u3m_bail(c3__exit);
       } else {
 
-        c = u3qdi_bif(a, n_b);
+        c = u3qdy_bif(a, n_b);
 
         if ( c3n == u3r_cell(c, &l_c, &r_c) ) {
           return u3m_bail(c3__exit);
@@ -67,8 +66,8 @@
           u3_noun d;
           u3_noun e;
 
-          d = u3qdi_dif(l_c, l_b);
-          e = u3qdi_dif(r_c, r_b);
+          d = u3qdy_dif(l_c, l_b);
+          e = u3qdy_dif(r_c, r_b);
           u3z(c);
 
           return _i_dif_join(d, e);
@@ -78,5 +77,5 @@
   }
 
   /*
-  u3_weak u3kdi_dif(u3_noun a, u3_noun b);
+  u3_weak u3kdy_dif(u3_noun a, u3_noun b);
   */

@@ -234,6 +234,15 @@ J_D_OFILES=\
        jets/d/in_uni.o \
        jets/d/in_bif.o \
        jets/d/in_dif.o \
+       jets/d/yn_has.o \
+       jets/d/yn_int.o \
+       jets/d/yn_gas.o \
+       jets/d/yn_mer.o \
+       jets/d/yn_put.o \
+       jets/d/yn_tap.o \
+       jets/d/yn_uni.o \
+       jets/d/yn_bif.o \
+       jets/d/yn_dif.o \
        jets/d/by_gas.o \
        jets/d/by_get.o \
        jets/d/by_has.o \
@@ -241,7 +250,15 @@ J_D_OFILES=\
        jets/d/by_put.o \
        jets/d/by_uni.o \
        jets/d/by_bif.o \
-       jets/d/by_dif.o
+       jets/d/by_dif.o \
+       jets/d/bz_gas.o \
+       jets/d/bz_get.o \
+       jets/d/bz_has.o \
+       jets/d/bz_int.o \
+       jets/d/bz_put.o \
+       jets/d/bz_uni.o \
+       jets/d/bz_bif.o \
+       jets/d/bz_dif.o
 
 J_E_OFILES=\
        jets/e/aes_ecb.o \

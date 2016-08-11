@@ -90,6 +90,16 @@
 #   define u3wdb_tap u3wdi_tap
     u3_noun u3wdb_uni(u3_noun);
 
+    u3_noun u3wdz_bif(u3_noun);
+    u3_noun u3wdz_dif(u3_noun);
+    u3_noun u3wdz_gas(u3_noun);
+    u3_noun u3wdz_get(u3_noun);
+    u3_noun u3wdz_has(u3_noun);
+    u3_noun u3wdz_int(u3_noun);
+    u3_noun u3wdz_put(u3_noun);
+#   define u3wdz_tap u3wdi_tap
+    u3_noun u3wdz_uni(u3_noun);
+
     u3_noun u3wdi_bif(u3_noun);
     u3_noun u3wdi_dif(u3_noun);
     u3_noun u3wdi_gas(u3_noun);
@@ -99,6 +109,16 @@
     u3_noun u3wdi_put(u3_noun);
     u3_noun u3wdi_tap(u3_noun);
     u3_noun u3wdi_uni(u3_noun);
+
+    u3_noun u3wdy_bif(u3_noun);
+    u3_noun u3wdy_dif(u3_noun);
+    u3_noun u3wdy_gas(u3_noun);
+    u3_noun u3wdy_has(u3_noun);
+    u3_noun u3wdy_int(u3_noun);
+    u3_noun u3wdy_mer(u3_noun);
+    u3_noun u3wdy_put(u3_noun);
+    u3_noun u3wdy_tap(u3_noun);
+    u3_noun u3wdy_uni(u3_noun);
 
   /** Tier 5.
   **/

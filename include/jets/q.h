@@ -85,6 +85,16 @@
 #   define u3qdb_tap u3qdi_tap
     u3_noun u3qdb_uni(u3_noun, u3_noun);
 
+    u3_noun u3qdz_bif(u3_noun, u3_noun);
+    u3_noun u3qdz_dif(u3_noun, u3_noun);
+    u3_noun u3qdz_gas(u3_noun, u3_noun);
+    u3_noun u3qdz_get(u3_noun, u3_noun);
+    u3_noun u3qdz_has(u3_noun, u3_noun);
+    u3_noun u3qdz_int(u3_noun, u3_noun);
+    u3_noun u3qdz_put(u3_noun, u3_noun, u3_noun);
+#   define u3qdz_tap u3qdi_tap
+    u3_noun u3qdz_uni(u3_noun, u3_noun);
+
     u3_noun u3qdi_bif(u3_noun, u3_noun);
     u3_noun u3qdi_dif(u3_noun, u3_noun);
     u3_noun u3qdi_gas(u3_noun, u3_noun);
@@ -94,6 +104,16 @@
     u3_noun u3qdi_put(u3_noun, u3_noun);
     u3_noun u3qdi_tap(u3_noun, u3_noun);
     u3_noun u3qdi_uni(u3_noun, u3_noun);
+
+    u3_noun u3qdy_bif(u3_noun, u3_noun);
+    u3_noun u3qdy_dif(u3_noun, u3_noun);
+    u3_noun u3qdy_gas(u3_noun, u3_noun);
+    u3_noun u3qdy_has(u3_noun, u3_noun);
+    u3_noun u3qdy_int(u3_noun, u3_noun);
+    u3_noun u3qdy_mer(u3_noun, u3_noun);
+    u3_noun u3qdy_put(u3_noun, u3_noun);
+    u3_noun u3qdy_tap(u3_noun, u3_noun);
+    u3_noun u3qdy_uni(u3_noun, u3_noun);
 
   /** Tier 5.
   **/

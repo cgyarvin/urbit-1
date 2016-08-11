@@ -535,6 +535,28 @@ static u3j_core _tri_d[] =
       {}
     };
 
+    static u3j_harm _two__yn_bif_a[] = {{".2", u3wdy_bif}, {}};
+    static u3j_harm _two__yn_dif_a[] = {{".2", u3wdy_dif}, {}};
+    static u3j_harm _two__yn_gas_a[] = {{".2", u3wdy_gas}, {}};
+    static u3j_harm _two__yn_has_a[] = {{".2", u3wdy_has}, {}};
+    static u3j_harm _two__yn_mer_a[] = {{".2", u3wdy_mer}, {}};
+    // static u3j_harm _two__yn_ynt_a[] = {{".2", u3wdy_ynt}, {}};
+    static u3j_harm _two__yn_put_a[] = {{".2", u3wdy_put}, {}};
+    static u3j_harm _two__yn_tap_a[] = {{".2", u3wdy_tap}, {}};
+    // static u3j_harm _two__yn_uni_a[] = {{".2", u3wdy_uni}, {}};
+  static u3j_core _two__yn_d[] =
+    { { "bif", _two__yn_bif_a },
+      { "dif", _two__yn_dif_a },
+      { "gas", _two__yn_gas_a },
+      { "has", _two__yn_has_a },
+      { "mer", _two__yn_mer_a },
+      // { "ynt", _two__yn_ynt_a },
+      { "put", _two__yn_put_a },
+      { "tap", _two__yn_tap_a },
+      // { "uni", _two__yn_uni_a },
+      {}
+    };
+
     static u3j_harm _two__by_bif_a[] = {{".2", u3wdb_bif, c3y}, {}};
     static u3j_harm _two__by_dif_a[] = {{".2", u3wdb_dif, c3y}, {}};
     static u3j_harm _two__by_gas_a[] = {{".2", u3wdb_gas, c3y}, {}};
@@ -554,6 +576,28 @@ static u3j_core _tri_d[] =
       { "put", _two__by_put_a },
       { "tap", _two__by_tap_a },
       // { "uni", _two__by_uni_a },
+      {}
+    };
+
+    static u3j_harm _two__bz_bif_a[] = {{".2", u3wdz_bif, c3y}, {}};
+    static u3j_harm _two__bz_dif_a[] = {{".2", u3wdz_dif, c3y}, {}};
+    static u3j_harm _two__bz_gas_a[] = {{".2", u3wdz_gas, c3y}, {}};
+    static u3j_harm _two__bz_get_a[] = {{".2", u3wdz_get, c3y}, {}};
+    static u3j_harm _two__bz_has_a[] = {{".2", u3wdz_has, c3y}, {}};
+    // static u3j_harm _two__bz_int_a[] = {{".2", u3wdz_int, c3y}, {}};
+    static u3j_harm _two__bz_put_a[] = {{".2", u3wdz_put, c3y}, {}};
+    static u3j_harm _two__bz_tap_a[] = {{".2", u3wdz_tap, c3y}, {}};
+    // static u3j_harm _two__bz_uni_a[] = {{".2", u3wdz_uni, c3y}, {}};
+  static u3j_core _two__bz_d[] =
+    { { "bif", _two__bz_bif_a },
+      { "dif", _two__bz_dif_a },
+      { "gas", _two__bz_gas_a },
+      { "get", _two__bz_get_a },
+      { "has", _two__bz_has_a },
+      // { "int", _two__bz_int_a },
+      { "put", _two__bz_put_a },
+      { "tap", _two__bz_tap_a },
+      // { "uni", _two__bz_uni_a },
       {}
     };
 
@@ -617,6 +661,9 @@ static u3j_core _two_d[] =
 
     { "by", 0, _two__by_d },
     { "in", 0, _two__in_d },
+
+    { "bz", 0, _two__bz_d },
+    { "yn", 0, _two__yn_d },
 
     { "cue", _two_cue_a },
     { "jam", _two_jam_a },
