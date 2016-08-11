@@ -55,6 +55,31 @@
     u3_noun
     u3kdb_gas(u3_noun a, u3_noun b);
 
+  /* u3kdz_get(): map get for key `b` in map `a` with u3_none.
+  */
+    u3_weak
+    u3kdz_get(u3_noun a, u3_noun b);
+
+  /* u3kdz_got(): map get for key `b` in map `a` with bail.
+  */
+    u3_noun
+    u3kdz_got(u3_noun a, u3_noun b);
+
+  /* u3kdz_put(): map put for key `b`, value `c` in map `a`.
+  */
+    u3_weak
+    u3kdz_put(u3_noun a, u3_noun b, u3_noun c);
+
+  /* u3kdz_has(): test for get.
+  */
+    u3_noun
+    u3kdz_has(u3_noun a, u3_noun b);
+
+  /* u3kdz_gas(): list to map.
+  */
+    u3_noun
+    u3kdz_gas(u3_noun a, u3_noun b);
+
   /* u3kdi_gas(): list to map.
   */
     u3_noun
@@ -80,7 +105,33 @@
     u3_noun 
     u3kdi_uni(u3_noun a, u3_noun b);
 
+  /* u3kdi_gas(): list to map.
+  */
+    u3_noun
+    u3kdi_gas(u3_noun a, u3_noun b);
+
+  /* u3kdy_has(): test for presence.
+  */
+    u3_noun
+    u3kdy_has(u3_noun a, u3_noun b);
+
+  /* u3kdy_tap(): map/set convert to list.  (solves by_tap also.)
+  */
+    u3_noun
+    u3kdy_tap(u3_noun a, u3_noun b);
+
+  /* u3kdy_put(): put in set.
+  */
+    u3_weak
+    u3kdy_put(u3_noun a, u3_noun b);
+
+  /* u3kdy_uni(): set union.
+  */
+    u3_noun 
+    u3kdy_uni(u3_noun a, u3_noun b);
+
 #   define u3kdb_tap(a, b) u3kdi_tap(a, b)
+#   define u3kdz_tap(a, b) u3kdy_tap(a, b)
 
 /* u3ke: tier 5 functions
 */
