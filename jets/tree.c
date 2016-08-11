@@ -669,6 +669,7 @@ static u3j_core _two_d[] =
     { "jam", _two_jam_a },
     { "mat", _two_mat_a },
     { "rub", _two_rub_a },
+    {}
   };
 
 
