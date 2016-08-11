@@ -504,7 +504,7 @@ static u3j_core _tri_d[] =
 
   static u3j_harm _two_dor_a[] = {{".2", u3wc_dor, c3y}, {}};
   static u3j_harm _two_gor_a[] = {{".2", u3wc_gor, c3y}, {}};
-  static u3j_harm _two_gyr_a[] = {{".2", u3wc_gor, c3n}, {}};
+  static u3j_harm _two_gyr_a[] = {{".2", u3wc_gyr, c3n}, {}};
   static u3j_harm _two_hor_a[] = {{".2", u3wc_hor, c3y}, {}};
   static u3j_harm _two_hyr_a[] = {{".2", u3wc_hyr, c3y}, {}};
   static u3j_harm _two_vor_a[] = {{".2", u3wc_vor, c3y}, {}};
