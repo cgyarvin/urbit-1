@@ -96,7 +96,8 @@ u3_work_loop(u3_work* wok_u)
   //  standard arvo kernel.
   //
   while ( 1 ) {
-    u3_noun taz_u = u3_work_read_task(wok_u);
+    u3_work_task taz_u = u3_work_read_task(wok_u);
+    u3_noun      pro;
 
     c3_assert(taz_u->num_d == wok_u->nex_d);
     wok_u->nex_d += 1;
@@ -110,13 +111,13 @@ u3_work_loop(u3_work* wok_u)
         wok_u->roc = u3v_fire(sys);
         wok_u->new = 0;
       }
-      u3_work_write_gift(wok_u, taz_u->num_d, 0);
+      pro = u3_work_write_gift(wok_u, taz_u->num_d, 0);
     }
     else {
-      u3_noun bog = u3_work_step(wok_u, taz_u->job);
+      u3_noun pro = u3_work_step(wok_u, taz_u->job);
 
-      u3_work_write_gift(wok_u, taz_u->num_d, bog);
     }
+    u3_work_write_gift(wok_u, taz_u->num_d, pro);
   }
 }
 
