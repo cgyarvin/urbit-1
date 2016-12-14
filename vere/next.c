@@ -56,6 +56,7 @@
     /* u3_mojo: outbound message stream.
     */
       typedef struct _u3_mojo {
+        uv_pipe_t*       
       } u3_mojo;
 
 
@@ -66,10 +67,21 @@ _next_read_empty(u3_moat* mot_u,
                  c3_d     len_d,
                  c3_y*    buf_y)
 {
+  /* put initial input in stray buffer
+  */
   if ( mot_u->rag_y ) {
-    mot_u->rag_y = c3_realloc(mot_u->rag_
+    mot_u->rag_y = c3_realloc(mot_u->rag_y, mot_u->len_d + len_d);
+    memcpy(mot_u->rag_y + mot_u->len_d, buf_y, len_d);
   }
-  if ( mot_u->len_w )
+  else {
+    mot_u->rag_y = buf_y;
+    mot_u->len_d = len_d;
+  }
+
+  /* if we have enough input 
+  if ( mot_u->len_d > 8ULL ) {
+    c3_d nel_d;
+  }
 }
 
 /* _next_handle_read(): process stream input
