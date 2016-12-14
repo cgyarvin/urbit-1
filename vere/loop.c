@@ -648,76 +648,7 @@ _lo_slow()
 
 /* u3_lo_spawn(): test spawning a worker process.
 */
-  static struct {
-    uv_process_options_t ops_u;
-    uv_pipe_t            pyp_u;
-    uv_stdio_container_t cod_u[3];
-  } kid_u;
 
-  /* _work_handle_exit(): 
-  */
-  static void 
-  _work_handle_exit(uv_process_t* req_u,
-                    c3_i          sas_i,
-                    c3_i          sig_i)
-  {
-    fprintf(stderr, "_work_child_exit: status %d, signal %d\r\n", sas_i, sig_i);
-    uv_close((uv_handle_t*) req, NULL);
-  }
-
-  /* _work_alloc(): libuv buffer allocator.
-  */
-  static void
-  _work_alloc(uv_handle_t* had_u, size_t len_i, uv_buf_t* buf)
-  {
-    void* ptr_v = c3_malloc(len_i);
-
-    *buf = uv_buf_init(ptr_v, len_i);
-  }
-
-  /* work_read(): 
-  */
-  void
-  _work_read(uv_stream_t* stream, 
-             ssize_t      len_i, 
-             uv_buf_t     buf_u)
-  {
-    c3_c* buf_c = c3_malloc(len_i + 1);
-
-    strncpy(buf_c, buf.base, len_i);
-    buf_c[len_i] = 0;
-    fprintf(stderr, "_work_read: %d chars, \"%s\"\r\n", len_i, buf_c);
-    free(buf_c);
-  }
-
-  
-  /* _work_spawn(): create child process.
-  */
-  static void
-  _work_spawn(uv_loop_t* lup_u)
-  {
-    c3_c* arg_c[3];
-
-    arg_c[0] = "dummy";
-    arg_c[1] = arg_c[2] = 0;
-
-    uv_pipe_init(lup_u, &kid_u.pyp_u, 0);
-    uv_pipe_open(&pyp_u, 0);
-
-    kid_u.ops_u.cod_u[0].flags = UV_CREATE_PIPE | UV_WRITABLE_PIPE;
-    kid_u.ops_u.cod_u[0].data_stream = (uv_stream_t *)&kid_u.pyp_u;
-
-    // kid_u.ops_u.cod_u[1].flags = UV_CREATE_PIPE | UV_READABLE_PIPE;
-    // kid_u.ops_u.cod_u[1].data_stream = (uv_stream_t *)&kid_u.pyp_u;
-
-    kid_u.ops_u.cod_u[1].flags = UV_IGNORE;
-    kid_u.ops_u.cod_u[2].flags = UV_IGNORE;
-    kid_u.ops_u.stdio = kid_u.ops_u.cod_u;
-    ops_u.stdio_count = 3;
-    
-    uv_read
-  }
-}
 
 /* u3_lo_loop(): begin main event loop.
 */
@@ -744,6 +675,8 @@ u3_lo_loop()
     exit(0);
   }
   else {
+    _work_spawn(u3L);
+
     if ( c3n == u3_Host.ops_u.bat ) {
       uv_run(u3L, UV_RUN_DEFAULT);
     }
