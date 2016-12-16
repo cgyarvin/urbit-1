@@ -22,66 +22,43 @@
 #include "all.h"
 #include "vere/vere.h"
 
-  typedef struct _u3_work {               //  worker process master
-    uv_process_options_t ops_u;           //  process configuration
-    uv_process_t         cub_u;           //  process handle
-    uv_pipe_t            inn_u;           //  stdin for child process
-    uv_pipe_t            out_u;           //  
-    uv_stdio_container_t cod_u[3];
-  } u3_work;
-
-  static u3_work u3W;
-
-  /* _work_handle_exit(): handle subprocess exit.
+  /* _proc_handle_exit(): handle subprocess exit.
   */
   static void 
-  _work_handle_exit(uv_process_t* req_u,
+  _proc_handle_exit(uv_process_t* req_u,
                     c3_ds         sas_i,
                     c3_i          sig_i)
   {
-    fprintf(stderr, "_work_handle_exit: status %lld, signal %d\r\n", 
+    fprintf(stderr, "_proc_handle_exit: status %lld, signal %d\r\n", 
                     sas_i, sig_i);
     uv_close((uv_handle_t*) req_u, 0);
   }
 
-  /* _work_alloc(): libuv buffer allocator.
-  */
-  static void
-  _work_alloc(uv_handle_t* had_u, 
-              size_t       len_i, 
-              uv_buf_t*    buf_u)
-  {
-    buf_u->
-    void* ptr_v = c3_malloc(len_i);
-
-    *buf_u = uv_buf_init(ptr_v, len_i);
-  }
-
-  /* _work_handle_read(): handle input from subprocess.
+  /* _proc_handle_read(): handle input from subprocess.
   */
   void
-  _work_handle_read(uv_stream_t* str_u,
+  _proc_handle_read(uv_stream_t* str_u,
                     ssize_t      len_i, 
                     const uv_buf_t*    buf_u)
   {
     if ( len_i == UV_EOF ) {
-      fprintf(stderr, "_work_handle_read: eof\r\n");
+      fprintf(stderr, "_proc_handle_read: eof\r\n");
     }
     else {
       c3_c* buf_c = c3_malloc(len_i + 1);
 
-      fprintf(stderr, "_work_read: %d\n", (int)len_i);
+      fprintf(stderr, "_proc_read: %d\n", (int)len_i);
       strncpy(buf_c, buf_u->base, len_i);
       buf_c[len_i] = 0;
-      fprintf(stderr, "_work_read: %d chars, \"%s\"\r\n", (int)len_i, buf_c);
+      fprintf(stderr, "_proc_read: %d chars, \"%s\"\r\n", (int)len_i, buf_c);
       free(buf_c);
     }
   }
  
-  /* _work_spawn(): create child process.
+  /* _proc_spawn(): create child process.
   */
   static void
-  _work_spawn(uv_loop_t* lup_u)
+  _proc_spawn(uv_loop_t* lup_u)
   {
     c3_c* arg_c[3];
     c3_i  err_i;
@@ -98,10 +75,13 @@
     u3W.cod_u[1].flags = UV_CREATE_PIPE | UV_WRITABLE_PIPE;
     u3W.cod_u[1].data.stream = (uv_stream_t *)&u3W.out_u;
 
+    u3W.cod_u[2].flags = UV_INHERIT_FD;
+    u3W.cod_u[2].fd = 2;
+
     u3W.ops_u.stdio = u3W.cod_u;
-    u3W.ops_u.stdio_count = 2;
+    u3W.ops_u.stdio_count = 3;
    
-    u3W.ops_u.exit_cb = _work_handle_exit;
+    u3W.ops_u.exit_cb = _proc_handle_exit;
     u3W.ops_u.file = arg_c[0];
     u3W.ops_u.args = arg_c;
 
@@ -111,7 +91,7 @@
       u3_lo_exit();
       exit(1);
     }
-    uv_read_start((uv_stream_t*) &u3W.out_u, _work_alloc, _work_handle_read);
+    uv_read_start((uv_stream_t*) &u3W.out_u, _proc_alloc, _proc_handle_read);
   }
 
 
@@ -151,7 +131,7 @@ u3_lo_loop()
     exit(0);
   }
   else {
-    _work_spawn(u3L);
+    _proc_spawn(u3L);
 
     if ( c3n == u3_Host.ops_u.bat ) {
       uv_run(u3L, UV_RUN_DEFAULT);

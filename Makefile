@@ -366,6 +366,7 @@ V_OFILES=\
        vere/reck.o \
        vere/sist.o \
        vere/term.o \
+       vere/newt.o \
        vere/time.o \
        vere/unix.o \
        vere/save.o \

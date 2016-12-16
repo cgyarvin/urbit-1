@@ -90,3 +90,7 @@
         c3_assert(!"memory lost");              \
       }                                         \
       rut;})
+
+#define c3_free(s)        free(s)
+#define c3_realloc(b, s)  realloc(b, s)
+

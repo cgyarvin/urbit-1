@@ -646,10 +646,6 @@ _lo_slow()
 #endif
 }
 
-/* u3_lo_spawn(): test spawning a worker process.
-*/
-
-
 /* u3_lo_loop(): begin main event loop.
 */
 void
@@ -675,8 +671,6 @@ u3_lo_loop()
     exit(0);
   }
   else {
-    _work_spawn(u3L);
-
     if ( c3n == u3_Host.ops_u.bat ) {
       uv_run(u3L, UV_RUN_DEFAULT);
     }

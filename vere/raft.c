@@ -150,7 +150,6 @@ _raft_alloc(uv_handle_t* had_u,
   *buf = uv_buf_init(ptr_v, len_i);
 }
 
-
 /* _raft_election_rand(): election timeout.
 */
 static c3_w

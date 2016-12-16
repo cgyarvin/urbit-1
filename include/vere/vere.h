@@ -199,6 +199,49 @@
         c3_y             hun_y[0];          //  data
       } u3_apac;
 
+    /* u3_poke: poke; first arg is 
+    */
+      typedef void (*u3_poke)(void*, u3_noun);
+
+    /* u3_bail: bailout function.  firrt
+    */
+      typedef void (*u3_bail)(void*, c3_i);
+
+    /* u3_mess: blob message in process.
+    */
+      typedef struct _u3_mess {
+        c3_d             len_d;             //  blob length in bytes
+        c3_d             has_d;             //  currently held             
+        struct _u3_meat* meq_u;             //  exit of message queue
+        struct _u3_meat* qem_u;             //  entry of message queue
+      } u3_mess;
+
+    /* u3_meat: blob message block.
+    */
+      typedef struct _u3_meat {
+        struct _u3_meat* nex_u;
+        c3_d             len_d;
+        c3_y             hun_y[0];
+      } u3_meat;
+
+    /* u3_moat: inbound message stream.
+    */
+      typedef struct _u3_moat {
+        uv_pipe_t        pyp_u;             //  input stream
+        u3_poke          pok_f;             //  action function
+        u3_bail          bal_f;             //  error response function
+        struct _u3_mess* mes_u;             //  message in progress
+        c3_d             len_d;             //  length of stray bytes
+        c3_y*            rag_y;             //  stray bytes
+      } u3_moat;
+
+    /* u3_mojo: outbound message stream.
+    */
+      typedef struct _u3_mojo {
+        uv_pipe_t pyp_u;                    //  output stream
+        u3_bail   bal_f;                    //  error response function
+      } u3_mojo;
+
     /* u3_ames: ames networking.
     */
       typedef struct _u3_ames {             //  packet network state
@@ -580,6 +623,27 @@
         c3_i       xit_i;                   //  exit code for shutdown
         void*      ssl_u;                   //  struct SSL_CTX*
       } u3_host;                            //  host == computer == process
+
+    /* u3_pawn: process parent.
+    */
+      typedef struct _u3_pawn {
+        c3_c*                who_c;         //  ship identity 
+        uv_process_t         cub_u;         //  process handle
+        u3_mojo              inn_u;         //  stdin for child
+        u3_moat              out_u;         //  stdout for child
+        uv_process_options_t ops_u;         //  process configuration
+        uv_stdio_container_t cod_u[3];      //  stdio configuration
+        c3_d                 evt_d;         //  current event number
+        struct _u3_pawn*     nex_u;         //  next in process list
+        struct _u3_pawn*     pre_u;         //  previous in process list
+      } u3_pawn;
+
+    /* u3_proc: process control system.
+    */
+      typedef struct _u3_proc {
+        u3_pawn* kid_u;
+      } u3_proc;
+
 
 #     define u3L  u3_Host.lup_u             //  global event loop
 #     define u3Z  (&(u3_Raft))
@@ -1067,7 +1131,6 @@
       */
         void
         u3_raft_work(void);
-
 
     /**  Disk persistence.
     **/
