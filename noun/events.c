@@ -815,6 +815,82 @@ u3e_save(void)
   _ce_patch_free(pat_u);
 }
 
+
+/* u3e_live_new(): start the persistence system.
+*/
+c3_o
+u3e_live_new(c3_c* dir_c)
+{
+  u3P.dir_c = dir_c;
+  u3P.nor_u.nam_c = "north";
+  u3P.sou_u.nam_c = "south";
+
+  {
+    u3_ce_patch* pat_u;
+
+    /* Open image files.
+    */
+    {
+      if ( (c3n == _ce_image_open(&u3P.nor_u, c3n)) ||
+           (c3n == _ce_image_open(&u3P.sou_u, c3n)) ) 
+      {
+        fprintf(stderr, "boot: no image\r\n");
+
+        if ( 0 != mprotect((void *)u3_Loom, u3a_bytes, PROT_READ) ) {
+          perror("protect");
+          c3_assert(0);
+        }
+      }
+    }
+
+    /* Load any patch files; apply them to images.
+    */
+    if ( 0 != (pat_u = _ce_patch_open()) ) {
+      printf("_ce_patch_apply\r\n");
+      _ce_patch_apply(pat_u);
+
+      printf("_ce_image_sync\r\n");
+      _ce_image_sync(&u3P.nor_u);
+      _ce_image_sync(&u3P.sou_u);
+
+      printf("_ce_patch_delete\r\n");
+      _ce_patch_delete();
+      printf("_ce_patch_free\r\n");
+      _ce_patch_free(pat_u);
+    }
+
+    /* Write image files to memory; reinstate protection.
+    */
+    {
+      _ce_image_blit(&u3P.nor_u, 
+                     u3_Loom, 
+                     (1 << u3a_page));
+
+      _ce_image_blit(&u3P.sou_u, 
+                     (u3_Loom + (1 << u3a_bits) - (1 << u3a_page)),
+                     -(1 << u3a_page));
+
+      if ( 0 != mprotect((void *)u3_Loom, u3a_bytes, PROT_READ) ) {
+        perror("protect");
+        c3_assert(0);
+      }
+      printf("protected loom\r\n");
+    }
+
+    /* If the images were empty, we are logically booting.
+    */
+    if ( (0 == u3P.nor_u.pgs_w) && (0 == u3P.sou_u.pgs_w) ) {
+      printf("live: logical boot\r\n");
+      nuu_o = c3y;
+    }
+    else {
+      u3a_print_memory("live: loaded",
+                       (u3P.nor_u.pgs_w + u3P.sou_u.pgs_w) << u3a_page);
+    }
+  }
+  return nuu_o;
+}
+
 /* u3e_live(): start the persistence system.
 */
 c3_o

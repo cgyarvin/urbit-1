@@ -229,11 +229,13 @@ _newt_read_cb(uv_stream_t*    str_u,
 */
 void
 u3_newt_read_start(u3_moat* mot_u,
-                   u3_poke  pok_f)
+                   u3_poke  pok_f,
+                   u3_bail  bal_f)
 {
   c3_i err_i;
 
   mot_u->pok_f = pok_f;
+  mot_u->bal_f = bal_f;
   mot_u->mes_u = 0;
   mot_u->len_d = 0;
   mot_u->rag_y = 0;

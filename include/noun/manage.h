@@ -1,6 +1,4 @@
 /* i/n/m.h
-**
-** This file is in the public domain.
 */
     /** System management.
     **/
@@ -8,6 +6,11 @@
       */
         void
         u3m_boot(c3_o nuu_o, c3_o bug_o, c3_c* dir_c, c3_c *pil_c);
+
+      /* u3m_boot_new(): start the u3 system.
+      */
+        void
+        u3m_boot(c3_o bug_o, c3_c* dir_c, c3_c *pil_c);
 
       /* u3m_bail(): bail out.  Does not return.
       **

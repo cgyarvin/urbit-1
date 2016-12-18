@@ -203,9 +203,9 @@
     */
       typedef void (*u3_poke)(void*, u3_noun);
 
-    /* u3_bail: bailout function.  firrt
+    /* u3_bail: bailout function.
     */
-      typedef void (*u3_bail)(void*, c3_i);
+      typedef void (*u3_bail)(void*, c3_c* wut_c, c3_i);
 
     /* u3_mess: blob message in process.
     */

@@ -24,8 +24,8 @@
     /* u3_cs_patch: memory change, top level.
     */
       typedef struct _u3_cs_patch {         
-        c3_i           ctl_i;
-        c3_i           mem_i;
+        c3_i         ctl_i;
+        c3_i         mem_i;
         u3e_control* con_u;
       } u3_ce_patch;
 
@@ -40,11 +40,11 @@
     /* u3e_pool: entire memory system.
     */
       typedef struct _u3e_pool {
-        c3_c*        dir_c;                     //  path to 
-        c3_d         evt_d;                     //  last patch written at event
-        c3_w         dit_w[u3a_pages >> 5];   //  touched since last save
-        u3e_image  nor_u;                     //  north segment
-        u3e_image  sou_u;                     //  south segment
+        c3_c*     dir_c;                    //  path to 
+        c3_d      evt_d;                    //  last patch written at event
+        c3_w      dit_w[u3a_pages >> 5];    //  touched since last save
+        u3e_image nor_u;                    //  north segment
+        u3e_image sou_u;                    //  south segment
       } u3e_pool;
 
 
@@ -73,8 +73,12 @@
       c3_o
       u3e_live(c3_o nuu_o, c3_c* dir_c);
 
+    /* u3e_live_new(): start the persistence system.  Return c3y if no image.
+    */
+      c3_o
+      u3e_live_new(c3_c* dir_c);
+
     /* u3e_dirty(): count dirty pages.
     */
       c3_w
       u3e_dirty(void);
-

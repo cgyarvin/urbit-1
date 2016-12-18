@@ -22,6 +22,7 @@
 #include "all.h"
 #include "vere/vere.h"
 
+
   /* _proc_handle_exit(): handle subprocess exit.
   */
   static void 
@@ -58,13 +59,18 @@
   /* _proc_spawn(): create child process.
   */
   static void
-  _proc_spawn(uv_loop_t* lup_u)
+  _proc_spawn(uv_loop_t* lup_u,
+              c3_c*      who_c,
+              c3_c*      key_c)
   {
     c3_c* arg_c[3];
     c3_i  err_i;
 
-    arg_c[0] = "./dummy";
-    arg_c[1] = arg_c[2] = 0;
+    arg_c[0] = "bin/urbit-client";      //  executable
+    arg_c[1] = ".";                     //  path to checkpoint directory
+    arg_c[2] = who_c;                   //  ship name, no ~
+    arg_c[3] = key_c;                   //  disk key, as %llx:%llx:%llx:%llx
+    arg_c[4] = 0;
 
     uv_pipe_init(lup_u, &u3W.inn_u, 0);
     uv_pipe_init(lup_u, &u3W.out_u, 0);

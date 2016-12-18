@@ -539,7 +539,6 @@ main(c3_i   argc,
       }
     }
     u3m_boot(u3_Host.ops_u.nuu,
-             u3_Host.ops_u.gab,
              u3_Host.dir_c,
              u3_Host.ops_u.pil_c);
 
