@@ -17,14 +17,14 @@
 
     /*  serf-lord protocol:
     **
-    **  ++  avis  (pair @ud ovum)           ::  input with ms timeout
     **  ++  plea                            ::  from serf to lord
     **    $%  $:  $play                     ::  send events
     **            p/@                       ::  first number expected
     **        ==                            ::
     **        $:  $done                     ::  event executed unchanged
     **            p/@                       ::  number of this event
-    **            q/(list ovum)             ::  actions
+    **            q/@                       ::  mug of state (after boot)
+    **            r/(list ovum)             ::  actions
     **        ==                            ::
     **        $:  $drop                     ::  ignore event
     **            p/@                       ::  number of this event
@@ -40,7 +40,8 @@
     **  ++  writ
     **    $%  $:  $cold                     ::  confirmed event (no output)
     **            p/@                       ::  event number
-    **            q/ovum                    ::  input
+    **            q/@                       ::  mug of state (after boot)
+    **            r/ovum                    ::  input
     **        ==                            ::
     **        $:  $exit                     ::  snapshot, then exit
     **            p/@                       ::  exit code
@@ -53,8 +54,9 @@
     **        ==                            ::
     **        $:  $warm                     ::
     **            p/@                       ::  event number
-    **            q/@ud                     ::  timeout in ms, or 0
-    **            r/ovum                    ::  actual event
+    **            q/@                       ::  mug of state
+    **            r/@ud                     ::  timeout in ms, or 0
+    **            s/ovum                    ::  actual event
     **    ==  ==
     */
 

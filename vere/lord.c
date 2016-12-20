@@ -34,17 +34,14 @@
   **        committed               (actions applied, sent to log)
   **        confirmed               (final log has saved)
   **
-  **    if the worker replaces the event with a %swap, 
+  **    if the worker replaces the event with a %swap, we redispatch,
+
+  **    
   */
     typedef struct _u3_writ {
       u3_lord* god_u;                       //  parent
       c3_d     evt_d;                       //  event number
       u3_noun  job;                         //  event data
-      c3_o     uns_o;                       //  yes/0 iff not saved
-      c3_o     und_o;                       //  yes/0 iff not dispatched
-      c3_o     unr_o;                       //  yes/0 iff not received
-      c3_o     unc_o;                       //  yes/0 iff not committed
-      c3_o     unf_o;                       //  
     } u3_writ;
 
   /* u3_proc: child process communication.
@@ -53,25 +50,37 @@
       uv_process... XX
       u3_mojo inn_u;                        //  client's stdin
       u3_moat out_u;                        //  client's stdout
+      c3_d    sen_d;                        //  last event dispatched
     } u3_proc;
 
   /* u3_disk: manage events on disk.
+  **
+  **    any event once discovered should be in one of these sets.
+  **    when we complete a precommit, we check that the event is
+  **    still in "sent to precommit" -- otherwise, it has been
+  **    replaced and needs to be re-precommitted.
   */
-    typedef struct _u3_tome {
-      c3_d com_d;                           //  events committed
-      c3_d 
+    typedef struct _u3_disk {               
+      u3_noun moc;                          //  (set evt_d) sent to commit
+      u3_noun com;                          //  (set evt_d) committed
+      c3_d    com_d;                        //  committed through
+      u3_noun rep;                          //  (set evt_d) sent to precommit
+      u3_noun pre;                          //  (set 
+    } u3_disk;
 
-  /* u3_lord: worker process controller
+  /* u3_lord: control child process.
   */
-    typedef struct _u3_lord {
+    typedef 
+  /* u3_pier: ship controller.
+  */
+    typedef struct _u3_pier {
       u3_proc*         por_u;               //  live process
       c3_c*            dir_c;               //  pier directory
       c3_d             gen_d;               //  last event discovered
-      c3_d             sen_d;               //  last event dispatched
       c3_d             rec_d;               //  last event processed
       c3_d             com_d;               //  last event committed
-      c3_d             key_d[4];            //  disk key
-      u3_tome          
+      c3_d             key_d[4];            //  save and passkey
+      u3_disk          log;                 //  
       struct _u3_lord* nex_u;               //  next in parent list
     } u3_lord;
 
@@ -85,12 +94,17 @@
 
     static u3_king u3K;
 
+
+/* _lord_disk_precommitted(): 
+*/
+void
+_disk_precomf
+
 /* u3_lord_react(): react to new queue state.
 */
 void
 u3_lord_react(u3_lord* sir_u)
 {
-  for ( 
 }
 
 /* u3_lord_discover(): insert task into process controller.
@@ -121,8 +135,6 @@ u3_lord_import(c3_c* dir_c,
                c3_c* out_c)
 {
 }
-
-/* u3_lord_boot(): 
 
 /* _lord_poke(): receive result from client.
 */
