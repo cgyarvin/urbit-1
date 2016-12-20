@@ -31,26 +31,48 @@
   **        generated               (event numbered and queued)
   **        dispatched              (sent to worker)
   **        received                (completed by worker)
-  **        committed               (actions applied, sent to log)
-  **        confirmed               (final log has saved)
+  **        released                (output actions allowed)
   **
-  **    if the worker replaces the event with a %swap, we redispatch,
-
-  **    
+  **    if the worker replaces the event with a %warm, we go from the
+  **    dispatched state back to itself.  currently, we dispatch one
+  **    event at a time to the worker, but this is not a hard constraint.
+  **
+  **    in parallel, we try to save the event.  it goes through phases:
+  **      
+  **        precommit requested
+  **        precommit complete
+  **        commit requested
+  **        commit complete
+  **   
+  **    the sanity constraints that connect these two paths:
+  **
+  **        - an event can't request a commit until it's received.
+  **        - an event can't be released until it, and all events
+  **          preceding it, are precommitted.
+  **
+  **    be committed until received, or executed until all events before
+  **    it are precommitted.
+  **
+  **    events are executed in order by the working process, but they
+  **    can be either precommitted or committed out-of-order.
   */
     typedef struct _u3_writ {
-      u3_lord* god_u;                       //  parent
-      c3_d     evt_d;                       //  event number
-      u3_noun  job;                         //  event data
+      u3_lord* god_u;                       //  belonging to
+      u3_noun  wit;                         //  source atom
+      u3_atom  mat;                         //  jammed atom (whole ++writ)
     } u3_writ;
 
-  /* u3_proc: child process communication.
+  /* u3_lord: working process controller.
   */
     typedef struct _u3_proc {
-      uv_process... XX
+      uv_process_t         cub_u;           //  process handle
+      uv_process_options_t ops_u;           //  process configuration
+      uv_stdio_container_t cod_u[3];        //  process options
       u3_mojo inn_u;                        //  client's stdin
       u3_moat out_u;                        //  client's stdout
       c3_d    sen_d;                        //  last event dispatched
+      c3_d    rec_d;                        //  last event received
+      c3_w    mug_w;                        //  mug after last event, or 0
     } u3_proc;
 
   /* u3_disk: manage events on disk.

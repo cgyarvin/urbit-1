@@ -23,24 +23,26 @@
     **        ==                            ::
     **        $:  $done                     ::  event executed unchanged
     **            p/@                       ::  number of this event
-    **            q/@                       ::  mug of state (after boot)
+    **            q/@                       ::  mug of state (or 0)
     **            r/(list ovum)             ::  actions
     **        ==                            ::
     **        $:  $drop                     ::  ignore event
     **            p/@                       ::  number of this event
     **        ==                            ::
-    **        $:  $swap                     ::  replace and retry
-    **            p/@                       ::  number of original event
-    **            q/ovum                    ::  replacement in order
-    **        ==                            ::
     **        $:  $fill                     ::  insert spontaneously
     **            p/ovum                    ::  new event
-    **    ==  ==                            ::
+    **        ==                            ::
+    **        $:  $warm                     ::  replace and retry
+    **            p/@                       ::  event number
+    **            q/@                       ::  mug of state (or 0)
+    **            r/@ud                     ::  timeout in ms, or 0
+    **            s/ovum                    ::  retry event
+    **    ==  ==
     **
     **  ++  writ
     **    $%  $:  $cold                     ::  confirmed event (no output)
     **            p/@                       ::  event number
-    **            q/@                       ::  mug of state (after boot)
+    **            q/@                       ::  mug of state (or 0)
     **            r/ovum                    ::  input
     **        ==                            ::
     **        $:  $exit                     ::  snapshot, then exit
@@ -52,9 +54,9 @@
     **        $:  $save                     ::  save snapshot to disk
     **            p/@                       ::  number of old snaps to save
     **        ==                            ::
-    **        $:  $warm                     ::
+    **        $:  $warm                     ::  unconfirmed event
     **            p/@                       ::  event number
-    **            q/@                       ::  mug of state
+    **            q/@                       ::  mug of state (or 0)
     **            r/@ud                     ::  timeout in ms, or 0
     **            s/ovum                    ::  actual event
     **    ==  ==
