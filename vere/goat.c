@@ -12,6 +12,7 @@
       u3_moat inn_u;                        //  message input
       u3_mojo out_u;                        //  message output
       c3_o    sav_o;                        //  pending save
+      c3_o    
     } u3_serf;
     static u3_serf u3S;
 
@@ -29,23 +30,14 @@
     **        $:  $drop                     ::  ignore event
     **            p/@                       ::  number of this event
     **        ==                            ::
-    **        $:  $fill                     ::  insert spontaneously
-    **            p/ovum                    ::  new event
-    **        ==                            ::
-    **        $:  $warm                     ::  replace and retry
+    **        $:  $work                     ::  replace and retry
     **            p/@                       ::  event number
     **            q/@                       ::  mug of state (or 0)
-    **            r/@ud                     ::  timeout in ms, or 0
-    **            s/ovum                    ::  retry event
-    **    ==  ==
+    **            r/ovum                    ::  retry event
+    **    ==  ==                            ::
     **
-    **  ++  writ
-    **    $%  $:  $cold                     ::  confirmed event (no output)
-    **            p/@                       ::  event number
-    **            q/@                       ::  mug of state (or 0)
-    **            r/ovum                    ::  input
-    **        ==                            ::
-    **        $:  $exit                     ::  snapshot, then exit
+    **  ++  writ                            ::  from lord to serf
+    **    $%  $:  $exit                     ::  snapshot, then exit
     **            p/@                       ::  exit code
     **        ==                            ::
     **        $:  $roll                     ::  rekey snapshot on disk
@@ -54,12 +46,11 @@
     **        $:  $save                     ::  save snapshot to disk
     **            p/@                       ::  number of old snaps to save
     **        ==                            ::
-    **        $:  $warm                     ::  unconfirmed event
+    **        $:  $work                     ::  replace and retry
     **            p/@                       ::  event number
     **            q/@                       ::  mug of state (or 0)
-    **            r/@ud                     ::  timeout in ms, or 0
-    **            s/ovum                    ::  actual event
-    **    ==  ==
+    **            r/ovum                    ::  event
+    **    ==  ==                            ::
     */
 
 /* _goat_fail(): failure stub.

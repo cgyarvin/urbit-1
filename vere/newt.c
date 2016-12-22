@@ -254,6 +254,9 @@ u3_newt_read_start(u3_moat* mot_u,
 struct _u3_write_t {
   uv_write_t wri_u;
   u3_mojo*   moj_u;
+  void*      vod_p;
+  u3_bail    bal_f;
+  u3_poke    pok_f;
   c3_y*      buf_y;
 };
 
@@ -269,17 +272,19 @@ _newt_write_cb(uv_write_t* wri_u, c3_i sas_i)
   free(req_u);
 
   if ( 0 != sas_i ) {
-    moj_u->bal_f(moj_u, sas_i);
+    req_u->bal_f(moj_u, sas_i);
   }
 }
 
-/* u3_newt_write(): write noun to stream.
+/* u3_newt_write(): write atom to stream.
 */
 void
 u3_newt_write(u3_mojo* moj_u,
-              u3_noun  job)
+              u3_noun  mat,
+              void*    vod_p,
+              u3_poke  pok_f,
+              u3_bail  bal_f)
 {
-  u3_noun             jam   = u3ke_jam(job);
   c3_w                len_w = u3r_met(3, jam);
   c3_y*               buf_y = c3_malloc(len_w + 8);
   struct _u3_write_t* req_u = c3_malloc(sizeof(*req_u));

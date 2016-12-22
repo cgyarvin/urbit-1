@@ -199,13 +199,17 @@
         c3_y             hun_y[0];          //  data
       } u3_apac;
 
-    /* u3_poke: poke; first arg is 
+    /* u3_poke: poke callback function.
     */
       typedef void (*u3_poke)(void*, u3_noun);
 
-    /* u3_bail: bailout function.
+    /* u3_bail: bailout callback function.
     */
-      typedef void (*u3_bail)(void*, c3_c* wut_c, c3_i);
+      typedef void (*u3_bail)(void*, c3_c* err_c);
+
+    /* u3_done: completion function.
+    */
+      typedef void (*u3_done)(void *);
 
     /* u3_mess: blob message in process.
     */
@@ -239,7 +243,6 @@
     */
       typedef struct _u3_mojo {
         uv_pipe_t pyp_u;                    //  output stream
-        u3_bail   bal_f;                    //  error response function
       } u3_mojo;
 
     /* u3_ames: ames networking.
