@@ -54,7 +54,7 @@ u3i_words(c3_w        a_w,
 */
 u3_atom
 u3i_chubs(c3_w        a_w,
-            const c3_d* b_d)
+          const c3_d* b_d)
 {
   c3_w *b_w = c3_malloc(a_w * 8);
   c3_w i_w;

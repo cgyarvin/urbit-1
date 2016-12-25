@@ -213,16 +213,22 @@ _newt_read_cb(uv_stream_t*    str_u,
   c3_d     len_d = (c3_d) len_i;
   u3_moat* mot_u = (void *)str_u;
 
-  if ( mot_u->rag_y ) {
-    mot_u->rag_y = c3_realloc(mot_u->rag_y, mot_u->len_d + len_d);
-    memcpy(mot_u->rag_y + mot_u->len_d, buf_u->base, len_d);
-    c3_free(buf_u->base);
+  if ( UV_EOF == len_i ) {
+    uv_read_stop(str_u);
+    mot_u->bal_f(mot_u, "stream closed");
   }
   else {
-    mot_u->rag_y = (c3_y *)buf_u->base;
-    mot_u->len_d = len_d;
+    if ( mot_u->rag_y ) {
+      mot_u->rag_y = c3_realloc(mot_u->rag_y, mot_u->len_d + len_d);
+      memcpy(mot_u->rag_y + mot_u->len_d, buf_u->base, len_d);
+      c3_free(buf_u->base);
+    }
+    else {
+      mot_u->rag_y = (c3_y *)buf_u->base;
+      mot_u->len_d = len_d;
+    }
+    _newt_consume(mot_u);
   }
-  _newt_consume(mot_u);
 }
 
 /* u3_newt_read_start(): start stream reading.
@@ -255,8 +261,6 @@ struct _u3_write_t {
   uv_write_t wri_u;
   u3_mojo*   moj_u;
   void*      vod_p;
-  u3_bail    bal_f;
-  u3_poke    pok_f;
   c3_y*      buf_y;
 };
 
@@ -272,7 +276,8 @@ _newt_write_cb(uv_write_t* wri_u, c3_i sas_i)
   free(req_u);
 
   if ( 0 != sas_i ) {
-    req_u->bal_f(moj_u, sas_i);
+    fprintf(stderr, "newt: bad write %d\r\n", sas_i);
+    req_u->bal_f(req_u->vod_p, u3_strerror(sas_i));
   }
 }
 
@@ -281,9 +286,7 @@ _newt_write_cb(uv_write_t* wri_u, c3_i sas_i)
 void
 u3_newt_write(u3_mojo* moj_u,
               u3_noun  mat,
-              void*    vod_p,
-              u3_poke  pok_f,
-              u3_bail  bal_f)
+              void*    vod_p)
 {
   c3_w                len_w = u3r_met(3, jam);
   c3_y*               buf_y = c3_malloc(len_w + 8);
@@ -301,6 +304,7 @@ u3_newt_write(u3_mojo* moj_u,
   u3r_bytes(0, len_w, buf_y + 8, jam);
 
   req_u->buf_y = buf_y;
+  req_u->vod_p = vod_p;
   buf_u.base = (c3_c*) buf_y;
   buf_u.len = len_w;
 

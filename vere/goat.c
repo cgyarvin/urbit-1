@@ -7,7 +7,9 @@
 #include <vere/vere.h>
 
     typedef struct _u3_serf {
-      c3_d    evt_d;                        //  event number
+      c3_d    evt_d;                        //  current event number
+      c3_l    mug_l;                        //  hash of state
+      c3_d    liv_d;                        //  first live event
       c3_d    key_d[4];                     //  disk key
       u3_moat inn_u;                        //  message input
       u3_mojo out_u;                        //  message output
@@ -21,23 +23,24 @@
     **  ++  plea                            ::  from serf to lord
     **    $%  $:  $play                     ::  send events
     **            p/@                       ::  first number expected
+    **            q/@                       ::  mug of state (or 0 to boot)
     **        ==                            ::
     **        $:  $done                     ::  event executed unchanged
     **            p/@                       ::  number of this event
     **            q/@                       ::  mug of state (or 0)
     **            r/(list ovum)             ::  actions
     **        ==                            ::
-    **        $:  $drop                     ::  ignore event
-    **            p/@                       ::  number of this event
-    **        ==                            ::
     **        $:  $work                     ::  replace and retry
     **            p/@                       ::  event number
     **            q/@                       ::  mug of state (or 0)
-    **            r/ovum                    ::  retry event
+    **            r/@                       ::  urbit time
+    **            s/ovum                    ::  event
     **    ==  ==                            ::
     **
     **  ++  writ                            ::  from lord to serf
-    **    $%  $:  $exit                     ::  snapshot, then exit
+    **    $%  $:  $boot                     ::  create 
+    **        ==
+    **        $:  $exit                     ::  snapshot, then exit
     **            p/@                       ::  exit code
     **        ==                            ::
     **        $:  $roll                     ::  rekey snapshot on disk
@@ -46,10 +49,11 @@
     **        $:  $save                     ::  save snapshot to disk
     **            p/@                       ::  number of old snaps to save
     **        ==                            ::
-    **        $:  $work                     ::  replace and retry
+    **        $:  $work                     ::  execute event
     **            p/@                       ::  event number
     **            q/@                       ::  mug of state (or 0)
-    **            r/ovum                    ::  event
+    **            r/@                       ::  urbit time
+    **            s/ovum                    ::  event
     **    ==  ==                            ::
     */
 
@@ -110,78 +114,78 @@ _goat_poke(void* vod_p, u3_noun job)
     goto error;
   }
   else {
-    u3_noun p_sut, q_sut, r_sut;
+    u3_noun p_job, q_job, r_job;
 
     switch ( c3h(job) ) {
       case c3__warm: {
-        if ( (c3n == u3r_qual(job, 0, &p_sut, &q_sut, &r_sut)) || 
-             (c3n == u3ud(p_sut)) ||
-             (u3r_met(6, p_sut) != 1)
-             (c3n == u3ud(q_sut)) ||
-             (u3r_met(5, q_sut) > 1)
-             (c3n == u3du(r_sut)) )
+        if ( (c3n == u3r_qual(job, 0, &p_job, &q_job, &r_job)) || 
+             (c3n == u3ud(p_job)) ||
+             (u3r_met(6, p_job) != 1)
+             (c3n == u3ud(q_job)) ||
+             (u3r_met(5, q_job) > 1)
+             (c3n == u3du(r_job)) )
         {
           goto error;
         }
-        _goat_poke_warm(u3r_chub(0, p_sut),
-                        u3r_word(0, q_sut),
-                        u3k(r_sut));
+        _goat_poke_warm(u3r_chub(0, p_job),
+                        u3r_word(0, q_job),
+                        u3k(r_job));
         break;
       }
       case c3__exit: {
-        if ( (c3n == u3r_cell(job, 0, &p_sut)) || 
-             (c3n == u3ud(p_sut))
-             (u3r_met(3, p_sut) > 1) )
+        if ( (c3n == u3r_cell(job, 0, &p_job)) || 
+             (c3n == u3ud(p_job))
+             (u3r_met(3, p_job) > 1) )
         {
           goto error;
         }
-        _goat_poke_exit(u3k(p_sut));
+        _goat_poke_exit(u3k(p_job));
         break;
       }
       case c3__roll: {
-        if ( (c3n == u3r_cell(job, 0, &p_sut)) || 
-             (c3n == u3ud(p_sut)) ) {
+        if ( (c3n == u3r_cell(job, 0, &p_job)) || 
+             (c3n == u3ud(p_job)) ) {
           goto error;
         }
-        _goat_poke_roll(u3k(p_sut));
+        _goat_poke_roll(u3k(p_job));
         break;
       }
       case c3__save: {
-        if ( (c3n == u3r_cell(job, 0, &p_sut)) || 
-             (c3n == u3ud(p_sut)) ) {
+        if ( (c3n == u3r_cell(job, 0, &p_job)) || 
+             (c3n == u3ud(p_job)) ) {
           goto error;
         }
         u3e_save();
         break;
       }
       case c3__cold: {
-        if ( (c3n == u3r_qual(job, 0, &p_sut, &q_sut, &r_sut)) || 
-             (c3n == u3ud(p_sut)) ||
-             (u3r_met(6, p_sut) != 1)
-             (c3n == u3ud(q_sut)) ||
-             (u3r_met(5, q_sut) > 1)
-             (c3n == u3du(r_sut)) )
+        if ( (c3n == u3r_qual(job, 0, &p_job, &q_job, &r_job)) || 
+             (c3n == u3ud(p_job)) ||
+             (u3r_met(6, p_job) != 1)
+             (c3n == u3ud(q_job)) ||
+             (u3r_met(5, q_job) > 1)
+             (c3n == u3du(r_job)) )
         {
           goto error;
         }
-        _goat_poke_warm(u3r_chub(0, p_sut),
-                        u3r_word(0, q_sut),
-                        u3k(r_sut));
+        _goat_poke_warm(u3r_chub(0, p_job),
+                        u3r_word(0, q_job),
+                        u3k(r_job));
         break;
       }
       case c3__warm: {
-        if ( (c3n == u3r_qual(job, 0, &p_sut, &q_sut, &r_sut)) || 
-             (c3n == u3ud(p_sut)) ||
-             (u3r_met(6, p_sut) != 1)
-             (c3n == u3ud(q_sut)) ||
-             (u3r_met(5, q_sut) > 1)
-             (c3n == u3du(r_sut)) )
+        if ( (c3n == u3r_qual(job, 0, &p_job, &q_job, &r_job)) || 
+             (c3n == u3ud(p_job)) ||
+             (u3r_met(6, p_job) != 1)
+             (c3n == u3ud(q_job)) ||
+             (u3r_met(5, q_job) > 1)
+             (c3n == u3du(r_job)) )
         {
           goto error;
         }
-        _goat_poke_warm(u3r_chub(0, p_sut),
-                        u3r_word(0, q_sut),
-                        u3k(r_sut));
+        _goat_poke_warm(u3r_chub(0, p_job),
+                        u3r_word(0, q_job),
+                        u3k(r_job));
         break;
       }
       default: goto error;
