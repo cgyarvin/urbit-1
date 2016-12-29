@@ -251,18 +251,18 @@ u3_newt_read_start(u3_moat* mot_u,
                         _newt_read_cb);
 
   if ( err_i != 0 ) {
-    mot_u->bal_f(mot_u, err_i);
+    mot_u->bal_f(mot_u, uv_strerror(err_i));
   }
 }
 
-/* An unusual lameness in libuv.
+/* write request for newt
 */
-struct _u3_write_t {
-  uv_write_t wri_u;
-  u3_mojo*   moj_u;
-  void*      vod_p;
-  c3_y*      buf_y;
-};
+  struct _u3_write_t {
+    uv_write_t wri_u;
+    u3_mojo*   moj_u;
+    void*      vod_p;
+    c3_y*      buf_y;
+  };
 
 /* _newt_write_cb(): generic write callback.
 */
@@ -277,7 +277,7 @@ _newt_write_cb(uv_write_t* wri_u, c3_i sas_i)
 
   if ( 0 != sas_i ) {
     fprintf(stderr, "newt: bad write %d\r\n", sas_i);
-    req_u->bal_f(req_u->vod_p, u3_strerror(sas_i));
+    moj_u->bal_f(req_u->vod_p, uv_strerror(sas_i));
   }
 }
 
@@ -285,10 +285,10 @@ _newt_write_cb(uv_write_t* wri_u, c3_i sas_i)
 */
 void
 u3_newt_write(u3_mojo* moj_u,
-              u3_noun  mat,
+              u3_atom  mat,
               void*    vod_p)
 {
-  c3_w                len_w = u3r_met(3, jam);
+  c3_w                len_w = u3r_met(3, mat);
   c3_y*               buf_y = c3_malloc(len_w + 8);
   struct _u3_write_t* req_u = c3_malloc(sizeof(*req_u));
   uv_buf_t            buf_u;
@@ -301,7 +301,7 @@ u3_newt_write(u3_mojo* moj_u,
   buf_y[2] = ((len_w >> 16) & 0xff);
   buf_y[3] = ((len_w >> 24) & 0xff);
   buf_y[4] = buf_y[5] = buf_y[6] = buf_y[7] = 0;
-  u3r_bytes(0, len_w, buf_y + 8, jam);
+  u3r_bytes(0, len_w, buf_y + 8, mat);
 
   req_u->buf_y = buf_y;
   req_u->vod_p = vod_p;
@@ -314,6 +314,6 @@ u3_newt_write(u3_mojo* moj_u,
                               1,
                               _newt_write_cb)) )
   {
-    moj_u->bal_f(moj_u, err_i);
+    moj_u->bal_f(moj_u, uv_strerror(err_i));
   }
 }

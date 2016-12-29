@@ -205,7 +205,7 @@
 
     /* u3_bail: bailout callback function.
     */
-      typedef void (*u3_bail)(void*, c3_c* err_c);
+      typedef void (*u3_bail)(void*, const c3_c* err_c);
 
     /* u3_done: completion function.
     */
@@ -243,7 +243,31 @@
     */
       typedef struct _u3_mojo {
         uv_pipe_t pyp_u;                    //  output stream
+        u3_bail   bal_f;                    //  error response function
       } u3_mojo;
+
+    /* u3_foil: abstract chub-addressed file.
+    */
+      typedef struct _u3_foil {
+        uv_file          fil_u;             //  libuv file handle
+        struct _u3_dire* dir_u;             //  parent directory
+        c3_c*            nam_c;             //  name within parent
+        c3_d             end_d;             //  end of file
+      } u3_foil;
+
+    /* u3_dent: directory entry.
+    */
+      typedef struct _u3_dent {
+        c3_c*            nam_c;
+        struct _u3_dent* nex_u;
+      } u3_dent;
+
+    /* u3_dire: simple directory state.
+    */
+      typedef struct _u3_dire {
+        c3_c*    pax_c;                     //  path of directory
+        u3_dent* all_u;                     //  file list 
+      } u3_dire;
 
     /* u3_ames: ames networking.
     */
@@ -793,6 +817,79 @@
         u3_noun
         u3_ve_zeus(u3_noun hap);
 
+    /**  Filesystem (async)
+    **/
+      /* u3_foil_folder(): load directory, blockingly.  null if nonexistent.
+      */
+        u3_dire*
+        u3_foil_folder(const c3_c* pax_c);         //  directory object, or 0
+
+      /* u3_foil_create(): create a new, empty file, not syncing.
+      */
+        void
+        u3_foil_create(void      (*fun_f)(void*,    //  context pointer
+                                          u3_foil*),//  file object
+                       void*       vod_p,           //  context pointer
+                       u3_dire*    dir_u,           //  directory
+                       const c3_c* nam_c);          //  name of new file
+
+      /* u3_foil_absorb(): absorb logfile, truncating to last good frame; block.
+      */
+        u3_foil*
+        u3_foil_absorb(u3_dire* dir_u,              //  directory
+                       c3_c*    nam_c);             //  filename
+
+      /* u3_foil_delete(): delete a file; free descriptor.
+      */
+        void
+        u3_foil_delete(void   (*fun_f)(void*),      //  context pointer
+                       void*    vod_p,              //  context pointer
+                       u3_foil* fol_u);             //  file to delete
+
+      /* u3_foil_append(): write a frame at the end of a file, freeing buffer.
+      */
+        void
+        u3_foil_append(void   (*fun_f)(void*,       //  context pointer
+                                       u3_foil*),   //  file object
+                       void*    vod_p,              //  context pointer
+                       u3_foil* fol_u,              //  file
+                       c3_d*    buf_d,              //  buffer to write from
+                       c3_d     len_d);             //  length in chubs
+
+      /* u3_foil_reveal(): read the frame before a position, allocating.
+      */
+        /* u3_foil_reveal(): read the frame before a position, blocking.
+        */
+        c3_d*
+        u3_foil_reveal(u3_foil* fol_u,              //  file from
+                       c3_d     pos_d,              //  end position
+                       c3_d*    len_d);             //  length return
+
+      /* u3_foil_commit(): reveal from one file, append to another.
+      */
+        void
+        u3_foil_commit(void   (*fun_f)(void*,       //  context pointer
+                                       u3_foil*,    //  file from
+                                       c3_d,        //  previous from
+                                       u3_foil*,    //  file to
+                                       c3_d),       //  end of to
+                       void*    vod_p,              //  context pointer
+                       u3_foil* del_u,              //  file from
+                       c3_d     del_d,              //  end of from frame
+                       u3_foil* unt_u,              //  file to
+                       c3_d     unt_d);             //  end of to frame
+
+      /* u3_foil_invent(): create a new file with one frame.
+      */
+        void
+        u3_foil_invent(void   (*fun_f)(void*,       //  context pointer
+                                       u3_foil*),   //  new file
+                       void*    vod_p,              //  context pointer
+                       u3_dire* dir_u,              //  directory
+                       c3_c*    nam_c,              //  filename
+                       c3_d*    buf_d,              //  buffer (to free)
+                       c3_d     len_d);             //  length
+
     /**  Output.
     **/
       /* u3_ve_tank(): print a tank at `tab`.
@@ -1245,3 +1342,20 @@
       */
         void
         u3_cttp_io_poll(void);
+
+    /**  Stream messages.
+    **/
+      /* u3_newt_write(): write atom to stream.
+      */
+        void
+        u3_newt_write(u3_mojo* moj_u,
+                      u3_atom  mat,
+                      void*    vod_p);
+
+      /* u3_newt_read_start(): start stream reading.
+      */
+        void
+        u3_newt_read_start(u3_moat* mot_u,
+                           u3_poke  pok_f,
+                           u3_bail  bal_f);
+

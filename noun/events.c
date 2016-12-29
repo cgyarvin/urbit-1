@@ -821,6 +821,8 @@ u3e_save(void)
 c3_o
 u3e_live_new(c3_c* dir_c)
 {
+  c3_o nuu_o = c3n;
+
   u3P.dir_c = dir_c;
   u3P.nor_u.nam_c = "north";
   u3P.sou_u.nam_c = "south";

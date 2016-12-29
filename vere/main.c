@@ -538,9 +538,13 @@ main(c3_i   argc,
         u3C.wag_w |= u3o_dryrun;
       }
     }
+#if 0
     u3m_boot(u3_Host.ops_u.nuu,
              u3_Host.dir_c,
              u3_Host.ops_u.pil_c);
+#else
+    u3m_boot_new(u3_Host.dir_c);
+#endif
 
     /*  Start Arvo.
     */

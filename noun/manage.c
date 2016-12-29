@@ -1500,7 +1500,7 @@ _cm_init(c3_o chk_o)
 /* _cm_init_new(): start the environment.
 */
 void
-_cm_init(void)
+_cm_init_new(void)
 {
   _cm_limits();
   _cm_signals();

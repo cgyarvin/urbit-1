@@ -73,13 +73,13 @@
   /* u3_writ: inbound event.
   */
     typedef struct _u3_writ {
-      u3_pier*         pir_u;               //  backpointer to pier
+      struct _u3_pier* pir_u;               //  backpointer to pier
       u3_noun          job;                 //  event source if not reloaded
       c3_d             evt_d;               //  event number
-      u3_noun          wen;                 //  event time
+      u3_noun          now;                 //  event time
       c3_l             msc_l;               //  ms to timeout
       c3_l             mug_l;               //  hash before executing
-      u3_file*         fil_u;               //  precommit file
+      u3_foil*         fol_u;               //  precommit file
       u3_atom          mat;                 //  jammed $work, or 0
       u3_noun          act;                 //  action list
       struct _u3_writ* nex_u;               //  next in queue, or 0
@@ -130,7 +130,7 @@
       u3_writ*         ent_u;               //  entry of queue
       u3_writ*         ext_u;               //  exit of queue
       struct _u3_lord* nex_u;               //  next in parent list
-    } u3_lord;
+    } u3_pier;
 
   /* u3_king: all executing piers.
   */
@@ -155,23 +155,23 @@ _pier_work_bail(void* vod_p, c3_c* err_c)
 /* _pier_disk_precommit_complete(): save request completed.
 */
 static void
-_pier_disk_precommit_complete(u3_writ* wit_u,
+_pier_disk_precommit_complete(void*    vod_p,
                               u3_foil* fol_u)
 {
-  u3_disk* log_u = wit_u->pir_u->log_u;
+  u3_writ* wit_u = vod_p;
+  u3_disk* log_u = &wit_u->pir_u->log_u;
 
   wit_u->fol_u = fol_u;
 
   if ( wit_u->evt_d != log_u->rep_d ) {
-    /* 
-    ** if this precommit is marked as not requested, it's been
+    /* if this precommit is marked as not requested, it's been
     ** replaced in the event stream.
     */
     c3_assert(wit_u->evt_d == (1ULL + log_u->rep_d));
 
     /* delete the file; the reactor will re-request.
     */
-    u3_foil_delete(fol_u);
+    u3_foil_delete(0, 0, fol_u);
     wit_u->fol_u = 0; 
   }
   else {
@@ -224,14 +224,14 @@ _pier_disk_precommit_request(u3_disk* log_u,
 
   /* mark as precommitted.
   */
-  pir_u->log_u.rep_d += 1;
+  log_u->rep_d += 1;
 }
 
 /* _pier_disk_precommit_replace(): replace precommit.
 */
 static void
-_pier_disk_replace(u3_disk* log_u, 
-                   u3_writ* wit_u)
+_pier_disk_precommit_replace(u3_disk* log_u, 
+                             u3_writ* wit_u)
 {
   /* if the replaced event is already precommitted, 
   ** undo the precommit and delete the file.
@@ -258,20 +258,18 @@ _pier_disk_replace(u3_disk* log_u,
 /* _pier_disk_commit_complete(): commit complete.
 */
 static void
-_pier_disk_commit_complete(u3_writ* wit_u,
-                           u3_foil* del_u,
-                           c3_d     del_d,
-                           u3_foil* unt_u,
-                           c3_d     ent_d)
+_pier_disk_commit_complete(void*    vod_p,
+                           u3_foil* fol_u)
 {
+  u3_writ* wit_u = vod_p;
   u3_disk* log_u = &wit_u->pir_u->log_u;
 
   /* advance commit counter
   */
   {
-    c3_assert(wit_u->evt_d == god_u->moc_d); 
-    c3_assert(wit_u->evt_d == (1ULL + god_u->com_d); 
-    god_u->com_d += 1ULL;
+    c3_assert(wit_u->evt_d == log_u->moc_d); 
+    c3_assert(wit_u->evt_d == (1ULL + log_u->com_d)); 
+    log_u->com_d += 1ULL;
   }
 }
 
@@ -281,39 +279,33 @@ static void
 _pier_disk_commit_request(u3_disk* log_u,
                           u3_writ* wit_u)
 {
-  u3_foil_commit(_pier_disk_commit_complete,  
-                 wit_u,
-                 wit_u->fol_u,
-                 wit_u->fol_u->end_d,
-                 log_u->fol_u,
-                 log_u->fol_u->end_d);
+  /* append to logfile
+  */
+  {
+    c3_d  len_d = u3r_met(6, wit_u->mat);
+    c3_d* buf_d = c3_malloc(8 * len_d);
+    
+    u3_foil_append(_pier_disk_commit_complete,
+                   wit_u,
+                   wit_u->fol_u,
+                   buf_d, 
+                   len_d);
+  }
 
   /* advance commit-request counter
   */
   {
-    c3_assert(wit_u->evt_d == (1ULL + god_u->moc_d));
-    god_u->moc_d += 1ULL;
+    c3_assert(wit_u->evt_d == (1ULL + log_u->moc_d));
+    log_u->moc_d += 1ULL;
   }
-}
-
-/* _pier_work_bail(): bail from work.
-*/
-static void
-_pier_work_bail(void* vod_p, c3_c* err_c)
-{
-  // u3_writ* wit_u = vod_p;
-
-  fprintf(stderr, "compute error: %s\r\n", err_c);
 }
 
 /* _pier_work_release(): apply side effects.
 */
 static void
-_pier_work_release(u3_writ* wit_u,
-                   u3_foil  fol_u)
+_pier_work_release(u3_lord* god_u, 
+                   u3_writ* wit_u)
 {
-  u3_lord* god_u = &wit_u->pir_u->god_u;
-
   /* XX release actions */
   c3_assert(0);
 
@@ -333,6 +325,8 @@ _pier_work_build(u3_writ* wit_u)
   /* set time - XX, leap control.
   */
   if ( 0 == wit_u->now ) {
+    struct timeval tim_tv;
+
     gettimeofday(&tim_tv, 0);
     wit_u->now = u3_time_in_tv(&tim_tv);
   }
@@ -434,14 +428,11 @@ _pier_work_reaction(u3_lord* god_u,
     break;
 
     case c3__done: {
-      c3_d evt_d;
-      c3_l mug_l;
-
       if ( (c3y != u3r_qual(bap, 0, &p_bap, &q_bap, &r_bap)) ||
            (c3n != u3ud(p_bap)) || 
            (1 != u3r_met(6, p_bap)) ||
            (c3n != u3ud(q_bap)) ||
-           (1 < u3r_met(5, q_bap)) ) ||
+           (1 < u3r_met(5, q_bap)) )
       {
         c3_assert(0);
       }
@@ -461,8 +452,6 @@ _pier_work_reaction(u3_lord* god_u,
 static void
 _pier_work_compute(u3_lord* god_u, u3_writ* wit_u)
 {
-  u3_noun mat;
-
   c3_assert(wit_u->evt_d == (1 + god_u->sen_d));
 
   wit_u->mug_l = god_u->mug_l;
@@ -486,50 +475,50 @@ _pier_apply(u3_pier* pir_u)
   while ( wit_u ) {
     /* if writ is next in line to compute, request compute
     */
-    if ( pre_u->evt_d == (1 + pir_u->god_u.sen_d) ) {
-      fprintf(stderr, "compute request: %llx\r\n", pre_u->evt_d);
+    if ( wit_u->evt_d == (1 + pir_u->god_u.sen_d) ) {
+      fprintf(stderr, "compute request: %llx\r\n", wit_u->evt_d);
       _pier_work_compute(&pir_u->god_u, wit_u);
     }
 
     /* if writ is (a) being computed and (b) next in line to
     ** precommit, request precommit
     */
-    if ( (pre_u->evt_d <= pir_u->god_u.sen_d) &&
-         (pre_u->evt_d == (1 + pir_u->log_u.rep_d)) ) 
+    if ( (wit_u->evt_d <= pir_u->god_u.sen_d) &&
+         (wit_u->evt_d == (1 + pir_u->log_u.rep_d)) ) 
     {
-      fprintf(stderr, "precommit request: %llx\r\n", pre_u->evt_d);
-      _pier_disk_precommit(&pir_u->log_u, wit_u);
+      fprintf(stderr, "precommit request: %llx\r\n", wit_u->evt_d);
+      _pier_disk_precommit_request(&pir_u->log_u, wit_u);
     }
 
     /* if writ is (a) computed and (b) precommitted, release actions
     */
-    if ( (pre_u->evt_d <= pir_u->god_u.dun_d) &&
-         (pre_u->evt_d <= pir_u->log_u.pre_d) )
+    if ( (wit_u->evt_d <= pir_u->god_u.dun_d) &&
+         (wit_u->evt_d <= pir_u->log_u.pre_d) )
     {
-      fprintf(stderr, "release: %llx\r\n", pre_u->evt_d);
+      fprintf(stderr, "release: %llx\r\n", wit_u->evt_d);
       _pier_work_release(&pir_u->god_u, wit_u);
     }
 
     /* if writ is (a) released and (b) next in line to commit, 
     ** request commit.
     */
-    if ( (pre_u->evt_d <= pir_u->god_u.rel_d) &&
-         (pre_u->evt_d == (1 + pir_u->log_u.moc_d)) ) 
+    if ( (wit_u->evt_d <= pir_u->god_u.rel_d) &&
+         (wit_u->evt_d == (1 + pir_u->log_u.moc_d)) ) 
     {
-      fprintf(stderr, "commit request: %llx\r\n", pre_u->evt_d);
-      _pier_disk_commit(&pir_u->log_u, wit_u);
+      fprintf(stderr, "commit request: %llx\r\n", wit_u->evt_d);
+      _pier_disk_commit_request(&pir_u->log_u, wit_u);
     }
 
     /* if writ is committed, delete from queue
     */
-    if ( (pre_u->evt_d <= pir_u->log_u.com_d) ) {
+    if ( (wit_u->evt_d <= pir_u->log_u.com_d) ) {
       /* remove from queue; must be at end
       */
       {
         c3_assert(wit_u == pir_u->ext_u);
         pir_u->ext_u = pir_u->ext_u->nex_u;
 
-        if ( wit_u = pir_u->ent_u ) {
+        if ( wit_u == pir_u->ent_u ) {
           c3_assert(pir_u->ext_u == 0);
           pir_u->ent_u = 0;
         }
@@ -537,7 +526,7 @@ _pier_apply(u3_pier* pir_u)
 
       /* delete precommit file
       */
-      u3_foil_delete(wit_u->fol_u);
+      u3_foil_delete(0, 0, wit_u->fol_u);
       wit_u->fol_u = 0;
 
       /* free contents
@@ -549,7 +538,7 @@ _pier_apply(u3_pier* pir_u)
       /* free file and dequeue
       */
       {
-        u3_writ nex_u = wit_u->nex_u;
+        u3_writ* nex_u = wit_u->nex_u;
 
         c3_free(wit_u);
         wit_u = nex_u;
@@ -571,7 +560,6 @@ u3_pier_discover(u3_pier* pir_u,
                  u3_noun  job)
 {
   u3_writ* wit_u = malloc(sizeof(u3_writ));
-  c3_l     mug_l;
 
   wit_u->pir_u = pir_u;
   wit_u->evt_d = pir_u->gen_d;
@@ -587,15 +575,9 @@ u3_pier_discover(u3_pier* pir_u,
     c3_assert(!pir_u->ext_u);
 
     pir_u->ent_u = pir_u->ext_u = wit_u;
-    wit_u->pre_u = wit_u->nex_u = 0;
   }
   else {
     wit_u->nex_u = pir_u->ent_u;
-    wit_u->pre_u = 0;
-
-    c3_assert(0 == pir_u->ent_u->pre_u);
-    pir_u->ent_u->pre_u = wit_u;
-
     pir_u->ent_u = wit_u;
   }
 }
@@ -619,8 +601,15 @@ void
 u3_pier_import(c3_c* dir_c,
                c3_c* out_c)
 {
+  //  pure stubbiness
+  //
+  u3K.len_w = 0;
+  _pier_work_bail(0, 0);
+  _pier_work_reaction(0, 0, 0);
+  _pier_apply(0);
 }
 
+#if 0
 /* _lord_poke(): receive result from client.
 */
 void
@@ -721,3 +710,4 @@ _lord_poke(void* vod_p, u3_noun job)
                     sas_i, sig_i);
     uv_close((uv_handle_t*) req_u, 0);
   }
+#endif

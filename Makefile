@@ -364,7 +364,10 @@ V_OFILES=\
        vere/loop.o \
        vere/raft.o \
        vere/reck.o \
+       vere/pier.o \
        vere/sist.o \
+			 vere/foil.o \
+			 vere/serf.o \
        vere/term.o \
        vere/newt.o \
        vere/time.o \
