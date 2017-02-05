@@ -1677,6 +1677,8 @@ _pier_loop_prepare(uv_prepare_t* pep_u)
   {
     _pier_loop_poll(u3_pier_stub());
     _pier_loop_time();
+
+    u3_unix_ef_look(c3n);
   }
 }
 
