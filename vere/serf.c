@@ -24,6 +24,8 @@
 #include "all.h"
 #include <vere/vere.h>
 
+#define GHETTO
+
     typedef struct _u3_serf {
       c3_d    evt_d;                        //  last event processed
       c3_l    mug_l;                        //  hash of state
@@ -107,12 +109,11 @@ _serf_send_complete(u3_noun vir)
 /* _serf_lame(): event failed, replace with error event.
 */
 static void
-_serf_lame(u3_noun ovo, u3_noun why, u3_noun tan)
+_serf_lame(u3_noun tea, u3_noun why, u3_noun tan)
 {
   /* XX: the next crud will contain the original event.
   */
-  u3z(ovo);
-  _serf_send_replace(u3nt(c3__crud, why, tan));
+  _serf_send_replace(u3nq(tea, c3__crud, why, tan));
 }
 
 /* _serf_sure(): event succeeded, report completion.
@@ -137,8 +138,14 @@ _serf_poke_live(c3_d    evt_d,              //  event number
 {
   u3_noun now = u3k(u3h(job));
   u3_noun ovo = u3k(u3t(job));
+#ifdef GHETTO
+  c3_c*   txt_c = u3r_string(u3h(u3t(ovo)));
+#endif
 
-  // fprintf(stderr, "serf: (%lld)| live\r\n", evt_d);
+#ifdef GHETTO
+  fprintf(stderr, "serf: (%lld)| live %s\r\n", evt_d, txt_c);
+  u3m_p("path", u3h(ovo));
+#endif
   
   c3_assert(evt_d == u3V.evt_d + 1ULL);
   u3V.evt_d = evt_d;
@@ -183,7 +190,8 @@ _serf_poke_live(c3_d    evt_d,              //  event number
       u3_noun tan = u3k(u3t(gon));
 
       u3z(gon);
-      _serf_lame(ovo, why, tan);
+      u3z(ovo);
+      _serf_lame(u3k(u3h(job)), why, tan);
     }
     else {
       u3_noun vir = u3k(u3h(u3t(gon)));
