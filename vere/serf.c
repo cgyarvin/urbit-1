@@ -24,8 +24,6 @@
 #include "all.h"
 #include <vere/vere.h>
 
-#define GHETTO
-
     typedef struct _u3_serf {
       c3_d    evt_d;                        //  last event processed
       c3_l    mug_l;                        //  hash of state
