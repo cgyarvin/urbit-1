@@ -98,13 +98,13 @@
         u3m_bail(c3__fail);
       }
       else {
-        u3_noun qqn_dab = u3t(u3t(n_dab));
+        u3_noun qn_dab = u3t(n_dab);
         u3_noun vad;
 
-        switch ( u3h(qqn_dab) ) {
+        switch ( u3h(qn_dab) ) {
           default: u3m_bail(c3__exit);
           case c3__ash: {
-            vad = _mull_in(van, sut, c3__noun, dox, u3t(qqn_dab));
+            vad = _mull_in(van, sut, c3__noun, dox, u3t(qn_dab));
             break;
           }
           case c3__elm: {
