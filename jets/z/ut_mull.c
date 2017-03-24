@@ -585,7 +585,14 @@
       case c3__tune: p_gen = u3t(gen);
       _mull_used();
       {
-        return u3nc(u3qz_face(p_gen, sut), u3qz_face(p_gen, dox));
+        u3_noun nux = u3nc(u3_nul, u3k(p_gen));
+        u3_noun pro;
+
+        pro = u3nc(u3qz_face(nux, sut), 
+                   u3qz_face(nux, dox));
+
+        u3z(nux);
+        return pro;
       }
 
       case c3__burn: p_gen = u3t(gen);
