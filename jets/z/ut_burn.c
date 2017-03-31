@@ -53,7 +53,7 @@
            u3_noun sut,
            u3_noun gil)
   {
-    u3_noun p_sut, q_sut, pq_sut, qq_sut, rq_sut, prq_sut, qrq_sut;
+    u3_noun p_sut, q_sut, pq_sut, qq_sut, rq_sut, sq_sut, psq_sut, qsq_sut;
 
     if ( c3n == u3du(sut) ) switch ( sut ) {
       default: return u3m_bail(c3__fail);
@@ -98,8 +98,8 @@
         }
       }
       case c3__core: u3x_cell(u3t(sut), &p_sut, &q_sut);
-                     u3x_trel(q_sut, &pq_sut, &qq_sut, &rq_sut);
-                     u3x_cell(rq_sut, &prq_sut, &qrq_sut);
+                     u3x_qual(q_sut, &pq_sut, &qq_sut, &rq_sut, &sq_sut);
+                     u3x_cell(sq_sut, &psq_sut, &qsq_sut);
       {
         u3_noun pay = _burn_in(van, p_sut, gil);
 
@@ -107,7 +107,7 @@
           return u3_nul;
         }
         else {
-          u3_noun ret = u3nt(u3_nul, u3k(prq_sut), u3k(u3t(pay)));
+          u3_noun ret = u3nt(u3_nul, u3k(psq_sut), u3k(u3t(pay)));
 
           u3z(pay);
           return ret;

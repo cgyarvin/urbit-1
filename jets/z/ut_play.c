@@ -153,8 +153,9 @@
     u3_noun dan = _play_in(van, sut, ruf);
 
     return _play_core(dan,
-                      u3nt(u3k(mel),
+                      u3nq(u3k(mel),
                            u3k(dan),
+                           u3_nul,
                            u3nc(u3nc(u3_nul, u3_nul),
                                 u3k(dab))));
   }

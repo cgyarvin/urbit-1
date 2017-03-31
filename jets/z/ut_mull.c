@@ -179,21 +179,25 @@
     u3_noun p_dan = u3h(dan);
     u3_noun q_dan = u3t(dan);
     u3_noun p_toc = _mull_core(u3k(p_dan),
-                               u3nt(c3__gold,
+                               u3nq(c3__gold,
                                     u3k(p_dan),
+                                    u3_nul,
                                     u3nc(u3_nul, u3k(dom))));
     u3_noun q_toc = _mull_core(u3k(q_dan),
-                               u3nt(c3__gold,
+                               u3nq(c3__gold,
                                     u3k(q_dan),
+                                    u3_nul,
                                     u3nc(u3_nul, u3k(dom))));
     u3_noun p_ret = _mull_core(u3k(p_dan),
-                               u3nt(u3k(mel),
+                               u3nq(u3k(mel),
                                     u3k(p_dan),
+                                    u3_nul,
                                     u3nc(u3nc(u3_nul, u3_nul),
                                          u3k(dom))));
     u3_noun q_ret = _mull_core(u3k(q_dan),
-                               u3nt(u3k(mel),
+                               u3nq(u3k(mel),
                                     u3k(q_dan),
+                                    u3_nul,
                                     u3nc(u3nc(u3_nul, u3_nul),
                                          u3k(dom))));
     u3_noun ret = u3nc(_mull_nice(van, gol, p_ret), q_ret);

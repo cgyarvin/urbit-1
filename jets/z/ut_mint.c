@@ -232,15 +232,17 @@
     u3_noun p_dan = u3h(dan);
     u3_noun q_dan = u3t(dan);
     u3_noun toc = _mint_core(u3k(p_dan),
-                             u3nt(c3__gold,
+                             u3nq(c3__gold,
                                   u3k(p_dan),
+                                  u3_nul,
                                   u3nc(u3_nul,
                                        u3k(dom))));
     u3_noun dez = _mint_hope(van, toc, dom);
     u3_noun zod = u3nc(1, dez);
     u3_noun cot = _mint_core(u3k(p_dan),
-                             u3nt(mel,
+                             u3nq(mel,
                                   u3k(p_dan),
+                                  u3_nul,
                                   u3nc(u3k(dez),
                                        u3k(dom))));
     u3_noun ret = u3nc(_mint_nice(van, gol, cot),
