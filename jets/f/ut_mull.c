@@ -697,6 +697,17 @@
         return ret;
       }
 
+      case c3__corp: u3x_cell(u3t(gen), &p_gen, &q_gen);
+      _mull_used();
+      {
+        u3_noun ruf = u3nc(u3_nul, 1);
+
+        ret = _mull_grow(van, sut, gol, dox, c3__gold, ruf, q_gen);
+        u3z(ruf);
+
+        return ret;
+      }
+
       case c3__peep: u3x_cell(u3t(gen), &p_gen, &q_gen);
       _mull_used();
       {
@@ -811,7 +822,7 @@
              u3_noun dox,
              u3_noun gen)
   {
-    c3_m    fun_m = 146 + c3__mull + ((!!u3r_at(u3qfu_van_vet, van)) << 8);
+    c3_m    fun_m = 145 + c3__mull + ((!!u3r_at(u3qfu_van_vet, van)) << 8);
     u3_noun pro   = u3z_find_4(fun_m, sut, gol, dox, gen);
 
     if ( u3_none != pro ) {
