@@ -305,9 +305,10 @@
 
               return 
                 u3nq(c3y,
+                     u3_nul,
                      u3k(pqp_hax),
-                     c3y,
-                     u3kf_fork(u3nt(u3k(pqqp_hax), u3k(pqqp_yor), u3_nul)));
+                     u3nc(c3y, u3kf_fork
+                       (u3nt(u3k(pqqp_hax), u3k(pqqp_yor), u3_nul))));
             }
           }
           else if ( c3n != u3h(qqp_yor) ) {
@@ -322,7 +323,8 @@
               return u3m_error("find-fork-h");
             } else {
               return 
-                u3nt(c3y, 
+                u3nq(c3y, 
+                     u3_nul,
                      u3k(pqp_hax),
                      u3nt(c3n, u3k(pqqp_hax), u3qdi_uni(qqqp_hax, qqqp_yor)));
             }
@@ -541,7 +543,7 @@
                 u3nt(u3_nul, u3nc(u3_nul, u3k(axe)), u3k(lon));
               u3_noun ret;
  
-              ret = u3nt(c3y, u3qb_weld(pp_tor, nol), u3k(qp_tor));
+              ret = u3nq(c3y, u3_nul, u3qb_weld(pp_tor, nol), u3k(qp_tor));
               u3z(nol);
               u3z(tor); 
               u3z(tyr);
@@ -740,7 +742,11 @@
              u3_noun way,
              u3_noun hyp)
   {
-    return _find_pony(van, sut, way, hyp);
+    u3_noun taf;
+   
+    taf = _find_pony(van, sut, way, hyp);
+
+    return taf;
   }
 
   u3_noun
@@ -756,7 +762,10 @@
     }
     else {
       if ( c3y == u3h(taf) ) {
-        return taf;
+        u3_noun fat = u3nc(c3y, u3k(u3t(u3t(taf))));
+        
+        u3z(taf);
+        return fat;
       }
       else {
         if ( c3n == u3h(u3t(taf)) ) {
