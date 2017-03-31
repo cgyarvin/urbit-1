@@ -187,6 +187,8 @@
           u3_noun u_zem = u3t(zem);
           u3_noun pu_zem = u3h(u_zem);
           u3_noun qu_zem = u3t(u_zem);
+          u3_noun pqu_zem = u3h(qu_zem);
+          u3_noun qqu_zem = u3t(qu_zem);
           u3_noun mut;
           u3_noun pro;
 
@@ -198,11 +200,11 @@
 
           pro = u3nq
             (c3y,
-             u3_nul,
+             u3k(pqu_zem),
              u3nc(u3nc(u3_nul, u3k(axe)), u3k(lon)),
              u3nt(c3n,
                   u3qc_peg(2, pu_zem),
-                  u3nt(u3nc(mut, u3k(qu_zem)), u3_nul, u3_nul)));
+                  u3nt(u3nc(mut, u3k(qqu_zem)), u3_nul, u3_nul)));
           
           u3z(zem);
           return pro;
