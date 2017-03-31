@@ -415,16 +415,6 @@
         return _play_cnts(van, sut, p_gen, q_gen);
       }
 
-      case c3__core: p_gen = u3t(gen);
-      _play_used();
-      {
-        u3_noun ruf = u3nc(u3_nul, 1);
-        u3_noun ret = _play_grow(van, sut, c3__gold, ruf, p_gen);
-
-        u3z(ruf);
-        return ret;
-      }
-
       case c3__corp: u3x_cell(u3t(gen), &p_gen, &q_gen);
       _play_used();
       {

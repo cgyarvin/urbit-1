@@ -742,17 +742,6 @@
         return _mint_cnts(van, sut, gol, p_gen, q_gen);
       }
 
-      case c3__core: p_gen = u3t(gen);
-      _mint_used();
-      {
-        u3_noun ruf = u3nc(u3_nul, 1);
-
-        ret = _mint_grow(van, sut, gol, c3__gold, ruf, p_gen);
-        u3z(ruf);
-
-        return ret;
-      }
-
       case c3__corp: u3x_cell(u3t(gen), &p_gen, &q_gen);
       _mint_used();
       {
