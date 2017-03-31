@@ -202,7 +202,7 @@
           u3_noun zix = u3qfu_shep(van, "gene", 'q', u3k(gen));
 
           u3t_push(u3nc(c3__mean, zix));
-          return u3m_error("play-open-z");
+          return u3m_error("play-open-f");
         }
         ret = _play_x(van, sut, rex);
         u3z(rex);
@@ -420,16 +420,6 @@
       {
         u3_noun ruf = u3nc(u3_nul, 1);
         u3_noun ret = _play_grow(van, sut, c3__gold, ruf, p_gen);
-
-        u3z(ruf);
-        return ret;
-      }
-
-      case c3__corp: u3x_cell(u3t(gen), &p_gen, &q_gen);
-      _play_used();
-      {
-        u3_noun ruf = u3nc(u3_nul, 1);
-        u3_noun ret = _play_grow(van, sut, c3__gold, ruf, q_gen);
 
         u3z(ruf);
         return ret;
