@@ -82,6 +82,18 @@
         (c3n, c3y, u3qa_dec(p_heg));
     }
   }
+
+  static u3_noun
+  _find_join(u3_noun a,
+             u3_noun b)
+  {
+    if ( c3y == u3r_sing(a, b) ) {
+      return u3k(a);
+    } else {
+      return u3kb_weld(u3k(a), u3nc(c3_s2('|', '|'), u3k(b)));
+    }
+  }
+              
   static u3_noun
   _find_buck_lose(u3_noun van,
                   u3_noun sut,
@@ -265,8 +277,8 @@
         else {
           u3_noun pp_hax = u3t(p_hax);              //  {span nock}
           u3_noun pp_yor = u3t(p_yor);              //  {span nock}
-          // u3_noun ppp_hax = u3h(pp_hax);
-          // u3_noun ppp_yor = u3h(pp_yor);
+          u3_noun ppp_hax = u3h(pp_hax);            //  wain
+          u3_noun ppp_yor = u3h(pp_yor);            //  wain
           u3_noun qpp_hax = u3t(pp_hax);
           u3_noun qpp_yor = u3t(pp_yor);
           u3_noun pqpp_hax = u3h(qpp_hax);            //  span
@@ -279,7 +291,7 @@
           }
           return u3nq(c3n,
                       c3n,
-                      u3_nul,
+                      _find_join(ppp_hax, ppp_yor),
                       u3nc(
                         u3kf_fork(u3nt(u3k(pqpp_hax), u3k(pqpp_yor), u3_nul)),
                         u3k(qqpp_hax)));
@@ -293,6 +305,8 @@
       else {
         u3_noun p_hax = u3t(hax);                     //  {wain vein opal}
         u3_noun p_yor = u3t(yor);                     //  {wain vein opal}
+        u3_noun pp_hax = u3h(p_hax);                  //  wain
+        u3_noun pp_yor = u3h(p_yor);                  //  wain
         u3_noun qp_hax = u3t(p_hax);                  //  {vein opal}
         u3_noun qp_yor = u3t(p_yor);                  //  {vein opal}
         u3_noun pqp_hax = u3h(qp_hax);                //  vein
@@ -313,7 +327,7 @@
 
               return 
                 u3nq(c3y,
-                     u3_nul,
+                     _find_join(pp_hax, pp_yor),
                      u3k(pqp_hax),
                      u3nc(c3y, u3kf_fork
                        (u3nt(u3k(pqqp_hax), u3k(pqqp_yor), u3_nul))));
