@@ -206,8 +206,9 @@
 
           mut = u3nt(c3__core,
                      u3k(p_sut),
-                     u3nt(c3__gold,
+                     u3nq(c3__gold,
                           u3k(qq_sut),
+                          u3k(rq_sut),
                           u3k(sq_sut)));
 
           pro = u3nq
