@@ -226,6 +226,7 @@
              u3_noun gol,
              u3_atom mel,
              u3_noun ruf,
+             u3_noun wan,
              u3_noun dom)
   {
     u3_noun dan = _mint_in(van, sut, c3__noun, ruf);
@@ -234,7 +235,7 @@
     u3_noun toc = _mint_core(u3k(p_dan),
                              u3nq(c3__gold,
                                   u3k(p_dan),
-                                  u3_nul,
+                                  u3k(wan),
                                   u3nc(u3_nul,
                                        u3k(dom))));
     u3_noun dez = _mint_hope(van, toc, dom);
@@ -242,7 +243,7 @@
     u3_noun cot = _mint_core(u3k(p_dan),
                              u3nq(mel,
                                   u3k(p_dan),
-                                  u3_nul,
+                                  u3k(wan),
                                   u3nc(u3k(dez),
                                        u3k(dom))));
     u3_noun ret = u3nc(_mint_nice(van, gol, cot),
@@ -749,7 +750,7 @@
       {
         u3_noun ruf = u3nc(u3_nul, 1);
 
-        ret = _mint_grow(van, sut, gol, c3__gold, ruf, q_gen);
+        ret = _mint_grow(van, sut, gol, c3__gold, ruf, p_gen, q_gen);
         u3z(ruf);
 
         return ret;

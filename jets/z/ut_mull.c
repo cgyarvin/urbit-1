@@ -173,6 +173,7 @@
              u3_noun dox,
              u3_atom mel,
              u3_noun ruf,
+             u3_noun wan,
              u3_noun dom)
   {
     u3_noun dan = _mull_in(van, sut, c3__noun, dox, ruf);
@@ -181,23 +182,23 @@
     u3_noun p_toc = _mull_core(u3k(p_dan),
                                u3nq(c3__gold,
                                     u3k(p_dan),
-                                    u3_nul,
+                                    u3k(wan),
                                     u3nc(u3_nul, u3k(dom))));
     u3_noun q_toc = _mull_core(u3k(q_dan),
                                u3nq(c3__gold,
                                     u3k(q_dan),
-                                    u3_nul,
+                                    u3k(wan),
                                     u3nc(u3_nul, u3k(dom))));
     u3_noun p_ret = _mull_core(u3k(p_dan),
                                u3nq(u3k(mel),
                                     u3k(p_dan),
-                                    u3_nul,
+                                    u3k(wan),
                                     u3nc(u3nc(u3_nul, u3_nul),
                                          u3k(dom))));
     u3_noun q_ret = _mull_core(u3k(q_dan),
                                u3nq(u3k(mel),
                                     u3k(q_dan),
-                                    u3_nul,
+                                    u3k(wan),
                                     u3nc(u3nc(u3_nul, u3_nul),
                                          u3k(dom))));
     u3_noun ret = u3nc(_mull_nice(van, gol, p_ret), q_ret);
@@ -695,7 +696,7 @@
       {
         u3_noun ruf = u3nc(u3_nul, 1);
 
-        ret = _mull_grow(van, sut, gol, dox, c3__gold, ruf, q_gen);
+        ret = _mull_grow(van, sut, gol, dox, c3__gold, ruf, p_gen, q_gen);
         u3z(ruf);
 
         return ret;

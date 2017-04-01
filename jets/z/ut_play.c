@@ -148,16 +148,17 @@
              u3_noun sut,
              u3_atom mel,
              u3_noun ruf,
-             u3_noun dab)
+             u3_noun wan,
+             u3_noun dom)
   {
     u3_noun dan = _play_in(van, sut, ruf);
 
     return _play_core(dan,
                       u3nq(u3k(mel),
                            u3k(dan),
-                           u3_nul,
+                           u3k(wan),
                            u3nc(u3nc(u3_nul, u3_nul),
-                                u3k(dab))));
+                                u3k(dom))));
   }
 
   static u3_noun
@@ -420,7 +421,7 @@
       _play_used();
       {
         u3_noun ruf = u3nc(u3_nul, 1);
-        u3_noun ret = _play_grow(van, sut, c3__gold, ruf, q_gen);
+        u3_noun ret = _play_grow(van, sut, c3__gold, ruf, p_gen, q_gen);
 
         u3z(ruf);
         return ret;
