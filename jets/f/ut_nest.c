@@ -232,7 +232,9 @@
     u3_noun p_sut, q_sut, p_ref, q_ref;
 
     if ( (c3n == u3du(sut)) ) switch ( sut ) {
-      default: return u3m_bail(c3__fail);
+      default: fprintf(stderr, "sut: mug: %x\r\n", u3r_mug(sut));
+               u3m_p("nest_dext: bad", sut);
+               return u3m_bail(c3__fail);
 
       case c3__noun: {
         return c3y;
@@ -504,12 +506,20 @@
     }
   }
 
+  extern int FOO;
   u3_noun
   _cqfu_nest(u3_noun van,
              u3_noun sut,
              u3_noun tel,
              u3_noun ref)
   {
+    if ( FOO ) { 
+      fprintf(stderr, "nest: sut %x, ref %x\r\n", u3r_mug(sut), u3r_mug(ref));
+    }
+    if ( 0x408fc230 == u3r_mug(sut) ) {
+      fprintf(stderr, "bad!\r\n");
+      abort();
+    }
     return _nest_dext(van, sut, tel, ref, u3_nul, u3_nul, u3_nul);
   }
 

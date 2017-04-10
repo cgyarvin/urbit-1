@@ -36,7 +36,14 @@
     if ( (c3__void == pac) ) {
       return c3__void;
     } else {
-      return u3nt(c3__core, pac, con);
+      u3_noun pro;
+
+      pro = u3nt(c3__core, pac, con);
+
+      if ( 0x4d0bf40f == u3r_mug(pro) ) {
+        fprintf(stderr, "bad: mint_core\r\n");
+      }
+      return pro;
     }
   }
 
@@ -359,6 +366,8 @@
   }
 #endif
 
+int FOO;
+
 # define _mint_used()
 
   static u3_noun
@@ -369,6 +378,13 @@
   {
     u3_noun p_gen, q_gen, r_gen;
     u3_noun ret;
+
+    if ( FOO ) {
+      u3m_p("gen", gen);
+      FOO = 0;
+      u3qfu_dump(van, "sut", sut);
+      FOO = 1;
+    } 
 
     if ( (c3__void == sut) &&
          !((c3y == u3du(gen)) && (c3__dbug == u3h(gen))) )
@@ -403,6 +419,25 @@
         u3_noun tal = _mint_in(van, sut, c3__noun, u3t(gen));
         u3_noun typ = u3qf_cell(u3h(hed), u3h(tal));
 
+        if ( 0x1d145502 == u3r_mug(typ) ) {
+          u3m_p("h_gen", u3h(gen));
+          fprintf(stderr, "head type: %x\r\n", u3r_mug(u3h(hed)));
+          {
+            u3_noun bad = u3h(hed);
+            u3_noun span = u3h(u3t(bad));
+            u3_noun twig = u3t(u3t(bad));
+
+            u3a_wash(bad);
+            fprintf(stderr, "head mug again: %x\r\n", u3r_mug(bad));
+            u3a_luse(bad);
+            FOO = 0;
+            u3m_p("h_bad", u3h(bad));
+            u3m_p("twig", twig);
+            u3qfu_dump(van, "span", span);
+            FOO = 1;
+          }
+          u3qfu_dump(van, "bad type", u3h(hed));
+        }
         ret = u3nc(_mint_nice(van, gol, typ),
                    u3qf_cons(u3t(hed),
                              u3t(tal)));
@@ -704,8 +739,42 @@
       case c3__per: u3x_cell(u3t(gen), &p_gen, &q_gen);
       _mint_used();
       {
+        if ( (0x46efe51c == u3r_mug(sut)) && (0x4e2da92d == u3r_mug(gen)) ) {
+          fprintf(stderr, "FOO!\r\n");
+          FOO = 1;
+        }
+
         u3_noun fid = _mint_in(van, sut, c3__noun, p_gen);
         u3_noun p_fid = u3h(fid);
+
+        FOO = 0;
+
+        if ( 0x1d145502 == u3r_mug(p_fid) ) {
+          fprintf(stderr, "per: p_fid %x\r\n", u3r_mug(p_fid));
+          u3m_p("p_gen", p_gen);
+          u3m_p("head", u3h(p_fid));
+          {
+            u3_noun x = u3h(u3t(p_fid));
+            u3_noun y = u3t(u3t(p_fid));
+            fprintf(stderr, "[cell %x %x]\r\n", u3r_mug(x), u3r_mug(y));
+            
+            if ( c3y == u3du(x) ) {
+              u3m_p("first head", u3h(x));
+            }
+            if ( c3y == u3du(y) ) {
+              u3m_p("second head", u3h(y));
+            }
+            u3qfu_dump(van, "x", x);
+            u3qfu_dump(van, "y", y);
+          }
+          fprintf(stderr, "sut: mug: %x\r\n", u3r_mug(sut));
+          fprintf(stderr, "gen: mug: %x\r\n", u3r_mug(gen));
+          fprintf(stderr, "WTF?\r\n");
+          u3qfu_dumo(van, "squeezer", sut);
+          u3qfu_dumo(van, "noble", p_fid);
+          fprintf(stderr, "WTG?\r\n");
+        }
+    
         u3_noun q_fid = u3t(fid);
         u3_noun dov = _mint_in(van, p_fid, gol, q_gen);
         u3_noun p_dov = u3h(dov);
@@ -909,6 +978,11 @@
     u3_noun pro   = u3z_find_4(fun_m, vrf, sut, gol, gen);
 
     if ( u3_none != pro ) {
+      if ( FOO ) {
+        fprintf(stderr, "FOO: mint cache\r\n");
+        u3m_p("gen", gen);
+        u3qfu_dump(van, "h_pro", u3h(pro));
+      }
       return pro;
     }
     else {

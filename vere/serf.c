@@ -65,6 +65,84 @@
     **    ==  ==                            ::
     */
 
+/* _serf_tape(): dump a tape, old style.  Don't do this.
+*/
+static void
+_serf_tape(FILE* fil_u, u3_noun tep)
+{
+  u3_noun tap = tep;
+
+  while ( c3y == u3du(tap) ) {
+    c3_c car_c;
+
+    if ( u3h(tap) >= 127 ) {
+      car_c = '?';
+    } else car_c = u3h(tap);
+
+    putc(car_c, fil_u);
+    tap = u3t(tap);
+  }
+  u3z(tep);
+}
+
+/* _serf_wall(): dump a wall, old style.  Don't do this.
+*/
+static void
+_serf_wall(u3_noun wol)
+{
+  FILE* fil_u = u3_term_io_hija();
+  u3_noun wal = wol;
+
+  fil_u = stderr;  // XX
+  while ( u3_nul != wal ) {
+    _serf_tape(fil_u, u3k(u3h(wal)));
+
+    putc(13, fil_u);
+    putc(10, fil_u);
+
+    wal = u3t(wal);
+  }
+  u3_term_io_loja(0);
+  u3z(wol);
+}
+
+/* _serf_punt(): dump tank list.
+*/
+static void
+_serf_punt(c3_l tab_l, u3_noun tac)
+{
+  u3_noun blu   = u3_term_get_blew(0);
+  c3_l    col_l = u3h(blu);
+  u3_noun cat   = tac;
+
+  //  We are calling nock here, but hopefully need no protection.
+  //
+  while ( c3y == u3r_du(cat) ) {
+    if ( 0 == u3A->roc ) {
+      u3_noun act = u3h(cat);
+
+      if ( c3__leaf == u3h(act) ) {
+        FILE* fil_u = u3_term_io_hija();
+
+        fil_u = stderr;   // XX
+        _serf_tape(fil_u, u3k(u3t(act)));
+        putc(13, fil_u);
+        putc(10, fil_u);
+
+        u3_term_io_loja(0);
+      }
+    }
+    else {      
+      u3_noun wol = u3dc("wash", u3nc(tab_l, col_l), u3k(u3h(cat)));
+
+      _serf_wall(wol);
+    }
+    cat = u3t(cat);
+  }
+  u3z(tac);
+  u3z(blu);
+}
+
 /* _serf_fail(): failure stub.
 */
 static void
@@ -229,7 +307,10 @@ _serf_poke_boot(c3_d    evt_d,
     fprintf(stderr, "serf: (5)| pill: %x\r\n", u3r_mug(eve));
 
     pru = u3m_soft(0, _serf_boot_fire, eve);
-    if ( u3h(pru) != 0 ) {
+
+    if ( u3_blip != u3h(pru) ) {
+      u3m_p("exit: why", u3h(pru));
+      _serf_punt(2, u3k(u3t(pru)));
       fprintf(stderr, "boot failed\r\n");
       exit(1);
     }
@@ -367,6 +448,20 @@ u3_serf_main(c3_i argc, c3_c* argv[])
   {
     u3V.evt_d = u3m_boot_new(dir_c);
   }
+
+#if 0
+  /* start up a "fast-compile" arvo for internal use only
+  */
+  fprintf(stderr, "serf: loading ivory\r\n");
+  {
+    extern c3_w u3_Ivory_length_w;
+    extern c3_y u3_Ivory_pill_y[];
+    u3_noun     lit;
+
+    lit = u3i_bytes(u3_Ivory_length_w, u3_Ivory_pill_y);
+    u3v_boot_lite(lit);
+  }
+#endif 
 
   /* configure pipe to lord process
   */

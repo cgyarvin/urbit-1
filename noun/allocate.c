@@ -781,6 +781,66 @@ u3a_wash(u3_noun som)
     }
   }
 }
+
+/* _superwash_a(): power-wash step 1.
+*/
+static void
+_superwash_a(u3_noun som)
+{
+  if ( _(u3a_is_cat(som)) || _(u3a_is_pom(som)) ) {
+    return;
+  } 
+  else {
+    u3a_noun* dog_u = u3a_to_ptr(som);
+
+    if ( dog_u->mug_w == 0xffffffff ) return;
+
+    dog_u->mug_w = 0xffffffff;    //  power wash
+    //  if ( dog_u->mug_w >> 31 ) { dog_u->mug_w = 0; }
+
+    if ( _(u3a_is_pom(som)) ) {
+      u3a_cell* god_u = (u3a_cell *)(void *)dog_u;
+    
+      u3a_superwash(god_u->hed);
+      u3a_superwash(god_u->tel);
+    }
+  } 
+}
+
+/* _superwash_b(): power-wash step 2.
+*/
+static void
+_superwash_b(u3_noun som)
+{
+  if ( _(u3a_is_cat(som)) || _(u3a_is_pom(som)) ) {
+    return;
+  } 
+  else {
+    u3a_noun* dog_u = u3a_to_ptr(som);
+
+    if ( dog_u->mug_w == 0 ) return;
+
+    dog_u->mug_w = 0;    //  power wash
+    //  if ( dog_u->mug_w >> 31 ) { dog_u->mug_w = 0; }
+
+    if ( _(u3a_is_pom(som)) ) {
+      u3a_cell* god_u = (u3a_cell *)(void *)dog_u;
+    
+      u3a_superwash(god_u->hed);
+      u3a_superwash(god_u->tel);
+    }
+  } 
+}
+
+/* u3a_superwash(): power-wash all lazy mugs in all layers.
+*/
+void
+u3a_superwash(u3_noun som)
+{
+  _superwash_a(som);
+  _superwash_b(som);
+}
+
 #endif
 
 extern u3_noun BDA, BDB;

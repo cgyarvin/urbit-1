@@ -3,6 +3,7 @@
 */
 #include "all.h"
 
+extern int FOO;
 
 /* internals
 */
@@ -13,6 +14,12 @@
            u3_noun mur,
            u3_noun men)
   {
+    if ( FOO ) {
+      fprintf(stderr, "toss: FOO\r\n");
+      u3m_p("peh", peh);
+      u3qfu_dump(van, "sut", sut);
+      u3qfu_dump(van, "mur", mur);
+    }
     if ( c3n == u3du(men) ) {
       return u3nc(u3_nul, u3_nul);
     }

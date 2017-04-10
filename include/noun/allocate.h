@@ -362,6 +362,11 @@
           void
           u3a_wash(u3_noun som);
 
+        /* u3a_superwash(): power-wash all lazy mugs in all layers.
+        */
+          void
+          u3a_superwash(u3_noun som);
+
         /* u3a_use(): reference count.
         */
           c3_w

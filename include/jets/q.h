@@ -236,6 +236,7 @@
     u3_noun u3qfu_dung(u3_noun, u3_noun cap, u3_noun);
     u3_noun u3qfu_dunq(u3_noun, const c3_c*, u3_noun);
     void    u3qfu_dump(u3_noun, const c3_c*, u3_noun);
+    void    u3qfu_dumo(u3_noun, const c3_c*, u3_noun);
     u3_noun u3qfu_fond(u3_noun, u3_noun, u3_noun, u3_noun);
     u3_noun u3qfu_finc(u3_noun, u3_noun, u3_noun, u3_noun, u3_noun);
     u3_noun u3qfu_fink(u3_noun, u3_noun, u3_noun, u3_noun, u3_noun);

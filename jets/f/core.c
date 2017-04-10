@@ -24,6 +24,11 @@
     if ( c3n == u3r_mean(cor, u3x_sam_2, &pac, u3x_sam_3, &con, 0) ) {
       return u3m_bail(c3__fail);
     } else {
-      return u3qf_core(pac, con);
+      u3_noun pro = u3qf_core(pac, con);
+
+      if ( 0x1d145502 == u3r_mug(pro) ) {
+        fprintf(stderr, "bad: core\r\n");
+      }
+      return pro;
     }
   }

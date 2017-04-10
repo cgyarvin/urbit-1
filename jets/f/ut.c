@@ -70,6 +70,22 @@
     u3_pier_tank(0, u3n_kick_on(u3qfu_dunq(van, ugh_c, typ)));
   }
 
+  //  dump: dump a type.
+  //
+  void
+  u3qfu_dumo(u3_noun     van,
+             const c3_c* paz_c,
+             u3_noun     typ)
+  {
+    c3_c* pfix_c = u3r_string((c3y == u3du(typ)) ? u3h(typ) : typ);
+    c3_c ugh_c[1024];
+
+    sprintf(ugh_c, "%s: %s: 0x%8x:", 
+            paz_c, pfix_c, u3r_mug(typ));
+
+    u3m_p("dumo", u3n_kick_on(u3qfu_dunq(van, ugh_c, typ)));
+  }
+
   //  shew: create a show core for mean
   //
   u3_noun

@@ -23,6 +23,8 @@ static u3_noun _n_nock_on(u3_noun bus, u3_noun fol);
 #       define uL(x) u3_term_io_loja(x)
 
 
+#define BAD(a)   ( ((a) >= 0x1fe91140) && ((a) <= 0x1fe91150) )
+
 /* _n_hint(): process hint.
 */
 static u3_noun
@@ -193,6 +195,8 @@ _n_mush(u3_noun val)
   return pro;
 }
 
+#define RETURN(x)  return x
+
 /* _n_nock_on(): produce .*(bus fol).  Do not virtualize.
 */
 static u3_noun
@@ -208,12 +212,21 @@ _n_nock_on(u3_noun bus, u3_noun fol)
 
     if ( c3y == u3r_du(hib) ) {
       u3_noun poz, riv;
+      u3_noun pro;
 
       poz = _n_nock_on(u3k(bus), u3k(hib));
+
+      if ( BAD(poz) ) {
+        fprintf(stderr, "BAD subject mug: %x\r\n", u3r_mug(bus));
+        u3m_p("BAD formula", hib);
+        u3a_luse(bus);
+        fprintf(stderr, "BAD value: %x\r\n", poz);
+      }
       riv = _n_nock_on(bus, u3k(gal));
 
       u3a_lose(fol);
-      return u3i_cell(poz, riv);
+      pro = u3i_cell(poz, riv);
+      RETURN(pro);
     }
     else switch ( hib ) {
       default: return u3m_bail(c3__exit);
@@ -226,7 +239,7 @@ _n_nock_on(u3_noun bus, u3_noun fol)
           u3_noun pro = u3k(u3at(gal, bus));
 
           u3a_lose(bus); u3a_lose(fol);
-          return pro;
+          RETURN(pro);
         }
       }
       c3_assert(!"not reached");
@@ -235,7 +248,7 @@ _n_nock_on(u3_noun bus, u3_noun fol)
         u3_noun pro = u3k(gal);
 
         u3a_lose(bus); u3a_lose(fol);
-        return pro;
+        RETURN(pro);
       }
       c3_assert(!"not reached");
 
@@ -257,7 +270,7 @@ _n_nock_on(u3_noun bus, u3_noun fol)
         pro = u3r_du(gof);
 
         u3a_lose(gof); u3a_lose(fol);
-        return pro;
+        RETURN(pro);
       }
       c3_assert(!"not reached");
 
@@ -268,7 +281,7 @@ _n_nock_on(u3_noun bus, u3_noun fol)
         pro = u3i_vint(gof);
 
         u3a_lose(fol);
-        return pro;
+        RETURN(pro);
       }
       c3_assert(!"not reached");
 
@@ -277,7 +290,7 @@ _n_nock_on(u3_noun bus, u3_noun fol)
         u3_noun pro = u3r_sing(u3h(wim), u3t(wim));
 
         u3a_lose(wim); u3a_lose(fol);
-        return pro;
+        RETURN(pro);
       }
       c3_assert(!"not reached");
 
@@ -349,7 +362,7 @@ _n_nock_on(u3_noun bus, u3_noun fol)
 
           if ( u3_none != pro ) {
             u3a_lose(fol);
-            return pro;
+            RETURN(pro);
           }
           else {
             if ( c3n == u3r_ud(b_gal) ) {
@@ -374,6 +387,7 @@ _n_nock_on(u3_noun bus, u3_noun fol)
         u3x_cell(gal, &p_gal, &q_gal);
         {
           u3_noun zep, hod, nex;
+          u3_noun pro;
 
           if ( c3y == u3r_du(p_gal) ) {
             u3_noun b_gal = u3h(p_gal);
@@ -394,7 +408,8 @@ _n_nock_on(u3_noun bus, u3_noun fol)
           }
 
           u3a_lose(fol);
-          return _n_hint(zep, hod, bus, nex);
+          pro = _n_hint(zep, hod, bus, nex);
+          RETURN(pro);
         }
       }
 
@@ -425,7 +440,7 @@ _n_nock_on(u3_noun bus, u3_noun fol)
           pro = u3k(u3t(u3t(val)));
           u3z(val);
 
-          return pro;
+          RETURN(pro);
         }
       }  
       c3_assert(!"not reached");

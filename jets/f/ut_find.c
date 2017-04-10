@@ -211,6 +211,10 @@
                           u3k(rq_sut),
                           u3k(sq_sut)));
 
+          if ( 0x4d0bf40f == u3r_mug(mut) ) {
+            fprintf(stderr, "bad: find_buck_core\r\n");
+          }
+
           pro = u3nq
             (c3y,
              u3k(pqu_zem),
@@ -768,6 +772,8 @@
     }
   }
 
+  extern int FOO;
+
   static u3_noun
   _cqfu_fond(u3_noun van,
              u3_noun sut,
@@ -776,8 +782,59 @@
   {
     u3_noun taf;
    
+    if ( FOO == 1 ) {
+      u3m_p("wing", hyp);
+      FOO = 0;
+      u3qfu_dump(van, "sut", sut);
+      FOO = 1;
+    }
     taf = _find_pony(van, sut, way, hyp);
+#if 0
+    if ( FOO == 1 ) {
+      FOO = 0;
+      
+      if ( (c3n == u3du(taf)) || (u3h(taf) != c3y) ) {
+        fprintf(stderr, "abnormal\r\n");
+      } 
+      else {
+        u3_noun p_taf = u3t(taf);         //  (pair what (pair vein opal))
+        u3_noun pp_taf = u3h(p_taf);      //  what
+        u3_noun qp_taf = u3t(p_taf);      //  (pair vein opal)
 
+        if ( u3h(qp_taf) == c3y ) {
+          fprintf(stderr, "leg\r\n");
+        } else {
+          u3_noun vein = u3h(qp_taf);
+          u3_noun opal = u3t(qp_taf);
+    
+          fprintf(stderr, "arm: vein %x\r\n", vein);
+          u3m_p("vein", vein);
+
+          if ( c3y == u3h(opal) ) {
+            fprintf(stderr, "leg\r\n");
+            u3qfu_dump(van, "leg", u3t(opal));
+          }
+          else {
+            c3_assert(c3n == u3h(opal));
+
+            u3_noun axis = u3h(u3t(opal));
+            fprintf(stderr, "arm: axis %d\r\n", axis);
+
+            u3_noun feet = u3qdb_tap(u3k(u3t(u3t(opal))), u3_nul);
+
+            while ( feet ) {
+              fprintf(stderr, "\nfoot:\r\n");
+              u3m_p("foot", u3t(u3h(feet)));
+              u3qfu_dump(van, "span", u3h(u3h(feet)));
+
+              feet = u3t(feet); 
+            }
+          }
+        }
+      }
+      FOO = 1;
+    }
+#endif
     return taf;
   }
 

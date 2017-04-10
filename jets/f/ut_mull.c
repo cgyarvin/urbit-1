@@ -15,7 +15,15 @@
     if ( (c3__void == pac) ) {
       return c3__void;
     } else {
-      return u3nt(c3__core, pac, con);
+      u3_noun pro;
+
+      pro = u3nt(c3__core, pac, con);
+
+      if ( 0x4d0bf40f == u3r_mug(pro) ) {
+        fprintf(stderr, "bad: mull_core\r\n");
+        abort();
+      }
+      return pro;
     }
   }
 
@@ -203,6 +211,19 @@
                                          u3k(dom))));
     u3_noun ret = u3nc(_mull_nice(van, gol, p_ret), q_ret);
 
+#if 0
+    fprintf(stderr, "_mull_grow: sut %x, dox %x, dom %x\r\n", 
+        u3r_mug(p_toc), u3r_mug(q_toc), u3r_mug(dom));
+#endif
+
+    if ( 0x44390d53 == u3r_mug(p_toc) ) {
+      fprintf(stderr, "AHA - sut mug %x\r\n", u3r_mug(sut));
+      u3m_p("p_sut", u3h(sut));
+      u3qfu_dump(van, "sut", sut);
+      u3m_p("hp_toc", u3h(p_toc));
+      u3qfu_dump(van, "q_toc", q_toc);
+      u3qfu_dump(van, "p_toc", p_toc);
+    }
     _mull_balk(van, p_toc, q_toc, dom);
 
     u3z(q_toc);
@@ -338,6 +359,11 @@
   {
     u3_noun p_gen, q_gen, r_gen;
     u3_noun ret;
+
+    if ( 0x4d0bf40f == u3r_mug(sut) ) {
+      u3m_p("h_sut", u3h(sut));
+      u3qfu_dump(van, "bad sut", sut);
+    }
 
     if ( c3n == u3du(gen) ) {
       u3_noun ter = u3r_at(u3x_con_3, van);
@@ -652,6 +678,14 @@
       {
         u3_noun lem = _mull_in(van, sut, c3__noun, dox, p_gen);
         u3_noun p_lem = u3h(lem);
+
+        if ( 0x5eb02d78 == u3r_mug(p_lem) ) {
+          fprintf(stderr, "HI\r\n");
+          u3m_p("p_gen", p_gen);
+          fprintf(stderr, "old sut %x\r\n", u3r_mug(sut));
+          u3m_p("h_sut", u3h(sut));
+          u3qfu_dump(van, "old sut", sut);
+        }
         u3_noun q_lem = u3t(lem);
         u3_noun ret = _mull_in(van, p_lem, gol, q_lem, q_gen);
 

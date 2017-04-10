@@ -41,12 +41,18 @@
           return u3m_error("wrap-gold");
         }
         else {
-          return u3nt(c3__core,
-                      u3k(p_sut),
-                      u3nq(u3k(yoz),
-                           u3k(qq_sut),
-                           u3k(rq_sut),
-                           u3k(sq_sut)));
+          u3_noun pro = u3nt(c3__core,
+                             u3k(p_sut),
+                             u3nq(u3k(yoz),
+                                  u3k(qq_sut),
+                                  u3k(rq_sut),
+                                  u3k(sq_sut)));
+
+          if ( 0x4d0bf40f == u3r_mug(pro) ) {
+            fprintf(stderr, "bad: wrap\r\n");
+            abort();
+          }
+          return pro;
         }
       }
       case c3__fork: p_sut = u3t(sut);

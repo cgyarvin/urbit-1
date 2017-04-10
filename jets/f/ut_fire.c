@@ -76,6 +76,10 @@
       u3_noun dox = u3nt
         (c3__core, u3k(qq_typ), u3k(q_typ));
 
+      if ( 0x4d0bf40f == u3r_mug(dox) ) {
+        fprintf(stderr, "bad: fire_each\r\n");
+      }
+
       if ( c3__ash == u3h(gat) ) {
         if ( (c3y == vet) &&
              (c3n == u3qfu_nest(van, qq_typ, c3y, p_typ)) )
