@@ -39,10 +39,6 @@
       u3_noun pro;
 
       pro = u3nt(c3__core, pac, con);
-
-      if ( 0x4d0bf40f == u3r_mug(pro) ) {
-        fprintf(stderr, "bad: mint_core\r\n");
-      }
       return pro;
     }
   }
@@ -420,23 +416,24 @@ int FOO;
         u3_noun typ = u3qf_cell(u3h(hed), u3h(tal));
 
         if ( 0x1d145502 == u3r_mug(typ) ) {
-          u3m_p("h_gen", u3h(gen));
-          fprintf(stderr, "head type: %x\r\n", u3r_mug(u3h(hed)));
+          // u3m_p("h_gen", u3h(gen));
+          // fprintf(stderr, "head type: %x\r\n", u3r_mug(u3h(hed)));
           {
             u3_noun bad = u3h(hed);
             u3_noun span = u3h(u3t(bad));
             u3_noun twig = u3t(u3t(bad));
 
             u3a_wash(bad);
-            fprintf(stderr, "head mug again: %x\r\n", u3r_mug(bad));
-            u3a_luse(bad);
+            // fprintf(stderr, "head mug again: %x\r\n", u3r_mug(bad));
+            // u3a_luse(bad);
             FOO = 0;
-            u3m_p("h_bad", u3h(bad));
-            u3m_p("twig", twig);
+            // u3m_p("h_bad", u3h(bad));
+            // u3m_p("twig", twig);
+            fprintf(stderr, "ABOUT TO MISPRINT\r\n");
             u3qfu_dump(van, "span", span);
+            fprintf(stderr, "MISPRINTED?\r\n");
             FOO = 1;
           }
-          u3qfu_dump(van, "bad type", u3h(hed));
         }
         ret = u3nc(_mint_nice(van, gol, typ),
                    u3qf_cons(u3t(hed),
@@ -747,10 +744,12 @@ int FOO;
         u3_noun fid = _mint_in(van, sut, c3__noun, p_gen);
         u3_noun p_fid = u3h(fid);
 
+        fprintf(stderr, "FOO OFF\r\n");
         FOO = 0;
 
+#if 0
         if ( 0x1d145502 == u3r_mug(p_fid) ) {
-          fprintf(stderr, "per: p_fid %x\r\n", u3r_mug(p_fid));
+          fprintf(stderr, "per: p_fid %x, mug %x\r\n", p_fid, u3r_mug(p_fid));
           u3m_p("p_gen", p_gen);
           u3m_p("head", u3h(p_fid));
           {
@@ -769,12 +768,9 @@ int FOO;
           }
           fprintf(stderr, "sut: mug: %x\r\n", u3r_mug(sut));
           fprintf(stderr, "gen: mug: %x\r\n", u3r_mug(gen));
-          fprintf(stderr, "WTF?\r\n");
-          u3qfu_dumo(van, "squeezer", sut);
-          u3qfu_dumo(van, "noble", p_fid);
-          fprintf(stderr, "WTG?\r\n");
+          u3qfu_dump(van, "noble", p_fid);
         }
-    
+#endif 
         u3_noun q_fid = u3t(fid);
         u3_noun dov = _mint_in(van, p_fid, gol, q_gen);
         u3_noun p_dov = u3h(dov);

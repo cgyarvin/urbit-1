@@ -218,6 +218,13 @@ _mug_both(c3_w lef_w, c3_w rit_w)
   c3_w out_w = _mug_out(bot_w);
 
   if ( 0 != out_w ) {
+    if (  0x38964bb8 == out_w) {
+      fprintf(stderr, "MUG: 0x38964bb8: from %x, %x\r\n", lef_w, rit_w);
+    }
+    if ( 0xd5688c5 == out_w &&
+         ((0x11727ea0 != lef_w) || (0x2abb36dd != rit_w)) ) {
+      fprintf(stderr, "MUG: 0xd5688c5: from %x, %x\r\n", lef_w, rit_w);
+    }
     return out_w;
   }
   else {

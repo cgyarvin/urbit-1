@@ -360,11 +360,6 @@
     u3_noun p_gen, q_gen, r_gen;
     u3_noun ret;
 
-    if ( 0x4d0bf40f == u3r_mug(sut) ) {
-      u3m_p("h_sut", u3h(sut));
-      u3qfu_dump(van, "bad sut", sut);
-    }
-
     if ( c3n == u3du(gen) ) {
       u3_noun ter = u3r_at(u3x_con_3, van);
       u3_noun rex = u3qfp_open(ter, gen);
@@ -678,14 +673,6 @@
       {
         u3_noun lem = _mull_in(van, sut, c3__noun, dox, p_gen);
         u3_noun p_lem = u3h(lem);
-
-        if ( 0x5eb02d78 == u3r_mug(p_lem) ) {
-          fprintf(stderr, "HI\r\n");
-          u3m_p("p_gen", p_gen);
-          fprintf(stderr, "old sut %x\r\n", u3r_mug(sut));
-          u3m_p("h_sut", u3h(sut));
-          u3qfu_dump(van, "old sut", sut);
-        }
         u3_noun q_lem = u3t(lem);
         u3_noun ret = _mull_in(van, p_lem, gol, q_lem, q_gen);
 

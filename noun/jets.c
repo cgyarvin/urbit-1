@@ -383,9 +383,8 @@ _cj_kick_z(u3_noun cor, u3j_core* cop_u, u3j_harm* ham_u, u3_atom axe)
     if ( _(ham_u->ice) ) {
       u3_weak pro = ham_u->fun_f(cor);
 
-      if ( FOO ) {
-        fprintf(stderr, "jet: %s\r\n", cop_u->cos_c);
-      }
+      // if ( FOO ) { fprintf(stderr, "jet: %s\r\n", cop_u->cos_c); }
+
       if ( u3_none != pro ) {
         u3z(cor);
         return pro;

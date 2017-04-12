@@ -220,7 +220,7 @@ _n_nock_on(u3_noun bus, u3_noun fol)
         fprintf(stderr, "BAD subject mug: %x\r\n", u3r_mug(bus));
         u3m_p("BAD formula", hib);
         u3a_luse(bus);
-        fprintf(stderr, "BAD value: %x\r\n", poz);
+        fprintf(stderr, "BAD value: %x (mug %x)\r\n", poz, u3r_mug(poz));
       }
       riv = _n_nock_on(bus, u3k(gal));
 

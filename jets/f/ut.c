@@ -63,11 +63,19 @@
   {
     c3_c* pfix_c = u3r_string((c3y == u3du(typ)) ? u3h(typ) : typ);
     c3_c ugh_c[1024];
+    u3_noun pro;
 
     sprintf(ugh_c, "%s: %s: 0x%8x:", 
             paz_c, pfix_c, u3r_mug(typ));
 
-    u3_pier_tank(0, u3n_kick_on(u3qfu_dunq(van, ugh_c, typ)));
+    pro = u3n_kick_on(u3qfu_dunq(van, ugh_c, typ));
+
+#if 1
+    u3z(pro);
+#else
+    u3_pier_tank(0, pro);
+#endif
+
   }
 
   //  dump: dump a type.
@@ -82,8 +90,6 @@
 
     sprintf(ugh_c, "%s: %s: 0x%8x:", 
             paz_c, pfix_c, u3r_mug(typ));
-
-    u3m_p("dumo", u3n_kick_on(u3qfu_dunq(van, ugh_c, typ)));
   }
 
   //  shew: create a show core for mean

@@ -220,27 +220,34 @@ u3i_cell(u3_noun a, u3_noun b)
 
     static int CNT = 0;
 
-    if ( 0x38964bb8 == u3r_mug(pro) ) {
-      fprintf(stderr, "389\r\n");
-      fprintf(stderr, "389: be4: (%x) %x %x %x %x %x %x %x\r\n", 
+    if ( (0x38964bb8 == u3r_mug(pro)) ||
+         (0x7aa2aa65 == u3r_mug(pro)) ) 
+    {
+      fprintf(stderr, 
+  "CELL: 250:%x/%d 125:%x/%d 62:%x/%d 31:%x/%d 15:%x/%d 7:%x/%d 3:%x/%d 1:%x/%d\r\n", 
                        u3r_mug(u3r_at(250, pro)),
+                       u3a_is_senior(u3R, u3r_at(250, pro)),
+
                        u3r_mug(u3r_at(125, pro)),
-                       u3r_mug(u3r_at(62, pro)),
+                       u3a_is_senior(u3R, u3r_at(125, pro)),
+
+                       u3r_mug(u3r_at(62, pro)), 
+                       u3a_is_senior(u3R, u3r_at(62, pro)),
+
                        u3r_mug(u3r_at(31, pro)),
+                       u3a_is_senior(u3R, u3r_at(31, pro)),
+
                        u3r_mug(u3r_at(15, pro)),
+                       u3a_is_senior(u3R, u3r_at(15, pro)),
+
                        u3r_mug(u3r_at(7, pro)),
+                       u3a_is_senior(u3R, u3r_at(7, pro)),
+
                        u3r_mug(u3r_at(3, pro)),
-                       u3r_mug(pro));
-      u3a_superwash(pro);
-      fprintf(stderr, "389: aft: (%x) %x %x %x %x %x %x %x\r\n", 
-                       u3r_mug(u3r_at(250, pro)),
-                       u3r_mug(u3r_at(125, pro)),
-                       u3r_mug(u3r_at(62, pro)),
-                       u3r_mug(u3r_at(31, pro)),
-                       u3r_mug(u3r_at(15, pro)),
-                       u3r_mug(u3r_at(7, pro)),
-                       u3r_mug(u3r_at(3, pro)),
-                       u3r_mug(pro));
+                       u3a_is_senior(u3R, u3r_at(3, pro)),
+
+                       u3r_mug(pro),
+                       u3a_is_senior(u3R, pro));
       // abort();
     }
 
@@ -251,15 +258,6 @@ u3i_cell(u3_noun a, u3_noun b)
       fprintf(stderr, "cell: b\r\n");
     }
 
-    if ( 0x46efe51c == u3r_mug(pro) ) {
-      fprintf(stderr, "odd tail %d\r\n", CNT);
-      CNT++;
-    }
-    if ( 0x1d145502 == u3r_mug(pro) ) {
-      fprintf(stderr, "bad cell\r\n");
-      fprintf(stderr, "parts %x %x\r\n", u3r_mug(u3h(nov_u->tel)),
-                                         u3r_mug(u3t(nov_u->tel)));
-    }
 #if 0
     if ( (0x730e66cc == u3r_mug(pro)) &&
          (c3__tssg == u3h(u3t(u3t(pro)))) ) {

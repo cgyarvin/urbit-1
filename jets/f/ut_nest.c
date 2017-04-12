@@ -513,6 +513,7 @@
              u3_noun tel,
              u3_noun ref)
   {
+#if 0
     if ( FOO ) { 
       fprintf(stderr, "nest: sut %x, ref %x\r\n", u3r_mug(sut), u3r_mug(ref));
     }
@@ -520,6 +521,7 @@
       fprintf(stderr, "bad!\r\n");
       abort();
     }
+#endif
     return _nest_dext(van, sut, tel, ref, u3_nul, u3_nul, u3_nul);
   }
 
