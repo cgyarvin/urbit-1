@@ -221,7 +221,8 @@ u3i_cell(u3_noun a, u3_noun b)
     static int CNT = 0;
 
     if ( (0x38964bb8 == u3r_mug(pro)) ||
-         (0x7aa2aa65 == u3r_mug(pro)) ) 
+         (0x7aa2aa65 == u3r_mug(pro)) || 
+         (0x7d7966d2 == u3r_mug(pro)) )
     {
       fprintf(stderr, 
   "CELL: 250:%x/%d 125:%x/%d 62:%x/%d 31:%x/%d 15:%x/%d 7:%x/%d 3:%x/%d 1:%x/%d\r\n", 
