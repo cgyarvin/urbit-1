@@ -744,8 +744,10 @@ int FOO;
         u3_noun fid = _mint_in(van, sut, c3__noun, p_gen);
         u3_noun p_fid = u3h(fid);
 
-        fprintf(stderr, "FOO OFF\r\n");
-        FOO = 0;
+        if ( (0x46efe51c == u3r_mug(sut)) && (0x4e2da92d == u3r_mug(gen)) ) {
+          fprintf(stderr, "FOO OFF\r\n");
+          FOO = 0;
+        }
 
 #if 0
         if ( 0x1d145502 == u3r_mug(p_fid) ) {
