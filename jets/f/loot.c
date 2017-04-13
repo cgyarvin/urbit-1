@@ -32,7 +32,7 @@
             u3_noun u_yep = u3t(yep);
             u3_noun pro;
 
-            pro = u3nt(u3_nul, u3qc_peg(axe, u3h(u_yep)), u3k(u3t(u_yep)));
+            pro = u3nt(u3_nul, u3qc_peg(axe, u3h(u_yep)), u3t(u_yep));
             u3z(yep);
             return pro;
           }
@@ -51,7 +51,7 @@
             u3_noun nax   = u3qc_peg(axe, 2);
             u3_noun pro;
 
-            pro = u3nt(u3_nul, u3qc_peg(nax, u3h(u_yep)), u3k(u3t(u_yep)));
+            pro = u3nt(u3_nul, u3qc_peg(nax, u3h(u_yep)), u3t(u_yep));
             u3z(nax);
             u3z(yep);
             return pro;
@@ -71,7 +71,7 @@
             u3_noun nax   = u3qc_peg(axe, 2);
             u3_noun pro;
 
-            pro = u3nt(u3_nul, u3qc_peg(nax, u3h(u_yep)), u3k(u3t(u_yep)));
+            pro = u3nt(u3_nul, u3qc_peg(nax, u3h(u_yep)), u3t(u_yep));
             u3z(nax);
             u3z(yep);
             return pro;
@@ -102,7 +102,7 @@
             u3_noun nax   = u3qc_peg(axe, 2);
             u3_noun pro;
 
-            pro = u3nt(u3_nul, u3qc_peg(nax, u3h(u_yep)), u3k(u3t(u_yep)));
+            pro = u3nt(u3_nul, u3qc_peg(nax, u3h(u_yep)), u3t(u_yep));
             u3z(nax);
             u3z(yep);
             return pro;
