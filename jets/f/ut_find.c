@@ -474,6 +474,7 @@
         u3_noun ret;
         u3_noun dog = u3nc(0, u3k(axe));  //  nock
         u3_noun wan;
+        u3_noun gib;
 
         if ( c3y == u3h(fid) ) {
           wan = u3k(u3h(u3t(fid)));
@@ -487,12 +488,15 @@
         vat = u3qfu_fine(van, sut, tor);
         u3z(tor);
 
+        gib = u3qf_comb(dog, q_tiv);
+
         ret = u3nq
           (c3n, 
            c3n, 
            wan,
-           u3nc(u3k(u3h(vat)), u3qf_comb(u3qf_comb(dog, q_tiv), u3t(vat))));
+           u3nc(u3k(u3h(vat)), u3qf_comb(gib, u3t(vat))));
 
+        u3z(gib);
         u3z(vat);
         u3z(dog);
         u3z(tiv);
