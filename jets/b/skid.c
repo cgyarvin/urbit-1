@@ -18,17 +18,19 @@
     } else {
       u3_noun acc = u3qb_skid(u3t(a), b);
       u3_noun hoz = u3n_slam_on(u3k(b), u3k(u3h(a)));
+      u3_noun pro;
 
       switch ( hoz ) {
-        case c3y:  acc = u3nc(u3nc(u3k(u3h(a)), u3h(acc)), u3t(acc));
+        case c3y:  pro = u3nc(u3nc(u3k(u3h(a)), u3k(u3h(acc))), u3k(u3t(acc)));
                    break;
-        case c3n:  acc = u3nc(u3h(acc), u3nc(u3k(u3h(a)), u3t(acc)));
+        case c3n:  pro = u3nc(u3k(u3h(acc)), u3nc(u3k(u3h(a)), u3k(u3t(acc))));
                    break;
-        default:   u3z(hoz);
-                   return u3m_bail(c3__exit);
+        default:   return u3m_bail(c3__exit);
       }
       u3z(hoz);
-      return acc;
+      u3z(acc);
+
+      return pro;
     }
   }
   u3_noun
