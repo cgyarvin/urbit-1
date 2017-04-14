@@ -6,14 +6,14 @@
   **/
     /* U3_MEMORY_DEBUG: add debugging information to heap.  Breaks image.
     */
-#     define U3_MEMORY_DEBUG
+#     undef U3_MEMORY_DEBUG
 
     /*  U3_CELLOC_TOGGLE: enable toggling of the custom cell allocator
      *  via -g.  This slightly slows down the cell allocator even when
      *  it's on.  Note that toggling -g breaks (maybe?) the image.  If
      *  U3_MEMORY_DEBUG is on, this should generally be on as well.
     */
-#     define U3_CELLOC_TOGGLE
+#     undef U3_CELLOC_TOGGLE
 
     /* U3_PRINT_WATERMARK: print watermark information for each road
     */
