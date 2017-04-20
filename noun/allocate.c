@@ -179,6 +179,7 @@ _ca_box_make_hat(c3_w len_w, c3_w ald_w, c3_w alp_w, c3_w use_w)
     u3R->hat_p += (len_w + pad_w);
 
     if ( u3R->hat_p >= u3R->cap_p ) {
+      fprintf(stderr, "meme north (%p); fre_w %x\r\n", u3R, u3R->all.fre_w);
       u3m_bail(c3__meme); return 0;
     }
   }  
@@ -189,6 +190,7 @@ _ca_box_make_hat(c3_w len_w, c3_w ald_w, c3_w alp_w, c3_w use_w)
     u3R->hat_p = all_p;
 
     if ( u3R->hat_p <= u3R->cap_p ) {
+      fprintf(stderr, "meme south (%p); fre_w %x\r\n", u3R, u3R->all.fre_w);
       u3m_bail(c3__meme); return 0;
     }
   }
@@ -307,9 +309,7 @@ _ca_willoc(c3_w len_w, c3_w ald_w, c3_w alp_w)
           ** from the free list.
           */
           siz_w += pad_w;
-#ifdef U3_MEMORY_DEBUG
-          _box_count(-(box_u->siz_w)); /* XX should this be ifdefed? */
-#endif
+          _box_count(-(box_u->siz_w));
           {
             {
               c3_assert((0 == u3to(u3a_fbox, *pfr_p)->pre_p) || 
@@ -593,6 +593,10 @@ u3a_celloc(void)
   }
 #endif
 
+#if 1
+    return u3a_walloc(c3_wiseof(u3a_cell));
+#endif
+
   u3p(u3a_fbox) cel_p;
 
   if ( (u3R == &(u3H->rod_u)) || !(cel_p = u3R->all.cel_p) ) {
@@ -617,6 +621,10 @@ u3a_cfree(c3_w* cel_w)
   if ( u3C.wag_w & u3o_debug_ram ) {
     return u3a_wfree(cel_w);
   }
+#endif
+
+#if 1
+    return u3a_wfree(cel_w);
 #endif
 
   if ( u3R == &(u3H->rod_u) ) {
@@ -1453,6 +1461,20 @@ u3a_print_memory(c3_c* cap_c, c3_w wor_w)
       fprintf(stderr, "%s: B/%d\r\n", cap_c, bib_w);
     }
   }
+}
+
+/* u3a_available(): report memory available.
+*/
+c3_w
+u3a_available(void)
+{
+  c3_w gap_w;
+
+  gap_w = _(u3a_is_north(u3R)) 
+              ? (u3R->cap_p - u3R->hat_p)
+              : (u3R->hat_p - u3R->cap_p);
+
+  return (gap_w + u3R->all.fre_w);
 }
 
 /* u3a_sweep(): sweep a fully marked road.

@@ -394,6 +394,12 @@ u3_serf_main(c3_i argc, c3_c* argv[])
 
   u3_newt_read(&u3V.inn_u);
 
+#if 0
+  /* turn on gc
+  */
+  u3C.wag_w |= u3o_debug_ram;
+#endif
+
   /* send start request
   */
   u3_serf_boot();

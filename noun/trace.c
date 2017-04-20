@@ -5,6 +5,8 @@
 #include "all.h"
 #include <pthread.h>
 
+#define MEMENTO
+
 /* u3t_push(): push on trace stack.
 */
 void
@@ -77,6 +79,33 @@ _t_ghetto(void)
 }
 #endif
 
+#ifdef MEMENTO
+/* _t_memento(): report memory usage.
+*/
+void
+_t_memento(void)
+{
+  static c3_w     old_w;
+  static u3_road* old_r;
+  c3_w            new_w = u3a_available();
+
+  if ( old_r != u3R ) {
+    old_w = 0;
+    old_r = u3R;
+  }
+  u3a_print_memory("free", new_w);
+  if ( old_w ) {
+    if ( old_w > new_w ) {
+      u3a_print_memory("  lose", (old_w - new_w));
+    }
+    else {
+      u3a_print_memory("  gain", (new_w - old_w));
+    }
+  }
+  old_w = new_w;
+}
+#endif
+
 /* u3t_slog(): print directly.
 */
 void
@@ -84,6 +113,10 @@ u3t_slog(u3_noun hod)
 {
 #ifdef GHETTO
   _t_ghetto();
+#endif
+
+#ifdef MEMENTO
+  _t_memento();
 #endif
 
   if ( c3y == u3du(hod) ) {

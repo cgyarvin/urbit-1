@@ -579,6 +579,10 @@ c3_w Exit;
 c3_i
 u3m_bail(u3_noun how)
 {
+  if ( c3__meme == how ) {
+    abort();
+  }
+
   if ( (c3__exit == how) && (u3R == &u3H->rod_u) ) {
     abort();
   }
