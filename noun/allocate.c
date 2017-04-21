@@ -593,7 +593,7 @@ u3a_celloc(void)
   }
 #endif
 
-#if 1
+#if 0
     return u3a_walloc(c3_wiseof(u3a_cell));
 #endif
 
@@ -604,6 +604,8 @@ u3a_celloc(void)
   }
   else {
     u3a_box* box_u = &(u3to(u3a_fbox, cel_p)->box_u);
+
+    _box_count(-(box_u->siz_w));
 
     box_u->use_w = 1;
     u3R->all.cel_p = u3to(u3a_fbox, cel_p)->nex_p;
@@ -623,7 +625,7 @@ u3a_cfree(c3_w* cel_w)
   }
 #endif
 
-#if 1
+#if 0
     return u3a_wfree(cel_w);
 #endif
 
@@ -633,6 +635,8 @@ u3a_cfree(c3_w* cel_w)
   else {
     u3a_box*      box_u = u3a_botox(cel_w);
     u3p(u3a_fbox) fre_p = u3of(u3a_fbox, box_u); 
+
+    _box_count(box_u->siz_w);
 
     u3to(u3a_fbox, fre_p)->nex_p = u3R->all.cel_p;
     u3R->all.cel_p = fre_p;
@@ -809,46 +813,6 @@ _me_gain_use(u3_noun dog)
       u3m_bail(c3__foul);
     }
     box_u->use_w += 1;
-
-#ifdef U3_MEMORY_DEBUG
-    // if ( u3_Code && !box_u->cod_w ) { box_u->cod_w = u3_Code; }
-
-#if 0
-    if ( u3r_mug(dog) == 0x15d47649 ) {
-      static c3_w bug_w = 0;
-
-      printf("bad %x %d %d\r\n", dog, bug_w, box_u->use_w);
-      if ( bug_w == 0 ) { abort(); }
-      bug_w++;
-    }
-#endif
-#if 0
-    {
-      static c3_w bug_w = 0;
-
-      if ( BDA == dog ) {
-        printf("BDA %d %d\r\n", bug_w, box_u->use_w);
-        // if ( bug_w == 0 ) { abort(); }
-        bug_w++;
-      }
-    }
-#endif
-
-#if 0
-    {
-      static c3_w bug_w = 0;
-
-      if ( FOO && u3a_botox(u3a_to_ptr(dog)) == (void *)0x200dfe3e4 ) {
-        u3a_box* box_u = u3a_botox(u3a_to_ptr(dog));
-
-        printf("GAIN %d %d\r\n", bug_w, box_u->use_w);
-        if ( bug_w == 8 ) { abort(); }
-        bug_w++;
-      }
-    }
-#endif
-#endif
-
   }
 }
 
@@ -1448,14 +1412,14 @@ u3a_print_memory(c3_c* cap_c, c3_w wor_w)
 
   if ( byt_w ) {
     if ( gib_w ) {
-      fprintf(stderr, "%s: GB/%d.%03d.%03d.%03d\r\n", 
+      fprintf(stderr, "%s: G/%d.%03d.%03d.%03d\r\n", 
           cap_c, gib_w, mib_w, kib_w, bib_w);
     }
     else if ( mib_w ) {
-      fprintf(stderr, "%s: MB/%d.%03d.%03d\r\n", cap_c, mib_w, kib_w, bib_w);
+      fprintf(stderr, "%s: M/%d.%03d.%03d\r\n", cap_c, mib_w, kib_w, bib_w);
     }
     else if ( kib_w ) {
-      fprintf(stderr, "%s: KB/%d.%03d\r\n", cap_c, kib_w, bib_w);
+      fprintf(stderr, "%s: K/%d.%03d\r\n", cap_c, kib_w, bib_w);
     }
     else if ( bib_w ) {
       fprintf(stderr, "%s: B/%d\r\n", cap_c, bib_w);

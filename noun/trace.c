@@ -93,13 +93,12 @@ _t_memento(void)
     old_w = 0;
     old_r = u3R;
   }
-  u3a_print_memory("free", new_w);
   if ( old_w ) {
     if ( old_w > new_w ) {
-      u3a_print_memory("  lose", (old_w - new_w));
+      u3a_print_memory("     lose", (old_w - new_w));
     }
     else {
-      u3a_print_memory("  gain", (new_w - old_w));
+      u3a_print_memory("     gain", (new_w - old_w));
     }
   }
   old_w = new_w;
