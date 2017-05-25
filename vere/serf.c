@@ -58,6 +58,9 @@
     **        $:  $save                     ::  save snapshot to disk
     **            p/@                       ::  number of old snaps to save
     **        ==                            ::
+    **        $:  $tomb                     ::  boot old-style pill
+    **            p/@                       ::  atomic pill
+    **        ==                            ::
     **        $:  $work                     ::  execute event
     **            p/@                       ::  event number
     **            q/@                       ::  mug of state (or 0)
@@ -126,6 +129,13 @@ _serf_sure(u3_noun ovo, u3_noun vir, u3_noun cor)
   u3A->roc = cor;
 
   _serf_send_complete(vir);
+}
+
+/* _serf_poke_tomb(): boot with old-style pill.
+*/
+static void
+_serf_poke_tomb(u3_noun sys)
+{
 }
 
 /* _serf_poke_live(): apply event.
