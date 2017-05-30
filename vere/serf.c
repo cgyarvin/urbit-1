@@ -24,6 +24,8 @@
 #include "all.h"
 #include <vere/vere.h>
 
+#define GHETTO
+
     typedef struct _u3_serf {
       c3_d    evt_d;                        //  last event processed
       c3_l    mug_l;                        //  hash of state
@@ -55,11 +57,11 @@
     **    $%  $:  $exit                     ::  snapshot, then exit
     **            p/@                       ::  exit code
     **        ==                            ::
+    **        $:  $lamb                     ::  boot old-style pill
+    **            p/@                       ::  atomic pill
+    **        ==                            ::
     **        $:  $save                     ::  save snapshot to disk
     **            p/@                       ::  number of old snaps to save
-    **        ==                            ::
-    **        $:  $tomb                     ::  boot old-style pill
-    **            p/@                       ::  atomic pill
     **        ==                            ::
     **        $:  $work                     ::  execute event
     **            p/@                       ::  event number
@@ -174,6 +176,7 @@ _serf_poke_live(c3_d    evt_d,              //  event number
     gon = u3m_soft(0, u3v_poke, u3k(ovo));
 
 #ifdef GHETTO
+    c3_c* txt_c = u3r_string(u3h(u3t(ovo)));
     c3_w ms_w;
     c3_w clr_w;
 
@@ -181,6 +184,7 @@ _serf_poke_live(c3_d    evt_d,              //  event number
     timersub(&f2, &b4, &d0);
     ms_w = (d0.tv_sec * 1000) + (d0.tv_usec / 1000);
     clr_w = ms_w > 1000 ? 1 : ms_w < 100 ? 2 : 3; //  red, green, yellow
+
     if (c3__belt != u3h(u3t(ovo)) || clr_w != 2) {
       uL(fprintf(uH, "\x1b[3%dm%%%s %4d.%02dms\x1b[0m\n",
                          clr_w, txt_c, ms_w, (int) (d0.tv_usec % 1000) / 10));
@@ -218,6 +222,14 @@ _serf_boot_fire(u3_noun eve)
   return pro;
 }
 
+/* _serf_boot_lamb(): old-school boot sequence.
+*/
+static u3_noun
+_serf_boot_lamb(u3_noun lam)
+{
+  assert(0); return 0;
+}
+
 /* _serf_poke_boot(): apply initial-stage event.
 */
 static void
@@ -231,7 +243,7 @@ _serf_poke_boot(c3_d    evt_d,
   u3V.evt_d = evt_d;
   fprintf(stderr, "serf: (%lld)| boot\r\n", evt_d);
 
-  if ( evt_d == 5 ) {
+  if ( 5 == evt_d ) {
     u3_noun eve = u3kb_flop(u3A->roe);
     u3_noun pru;
     
